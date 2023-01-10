@@ -1,2 +1,17 @@
-alias git-log="git log --all --graph --decorate"
-alias lsl="ls -lha"
+# Aliases - Naming Rules:
+# 1. No uppercase letters
+# 2. No delimiter between words
+
+# commonly used Git commands that can be executed without additional arguments
+alias glog="git log --all --graph --decorate"
+alias gconfig="git config --list --show-origin"
+alias ga="git add ./"
+alias gac="git commit -a"
+alias gamend="git commit -a --amend"
+alias gremote="git remote -v"
+
+# commonly used Shell commands
+alias l="ls -lha"
+
+# Oh-my-zsh plugins
+alias aliases="acs"

@@ -3,3 +3,7 @@
 	email = huang2627099045@gmail.com
 [core]
 	editor = vim
+[http]
+	proxy = http://127.0.0.1:15732
+[https]
+	proxy = http://127.0.0.1:15732
