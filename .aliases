@@ -10,6 +10,7 @@ alias gac="git add ./ ; git commit"
 alias gamend="git commit -a --amend"
 alias gremote="git remote -v"
 alias gpush='git push origin $(git branch --show-current):$(git branch --show-current)'
+alias gopen="git open"
 
 # commonly used Shell commands
 alias l="ls -lha"
