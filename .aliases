@@ -9,7 +9,18 @@ alias ga="git add ./"
 alias gac="git add ./ ; git commit"
 alias gamend="git commit -a --amend"
 alias gremote="git remote -v"
-alias gpush='git push origin $(git branch --show-current):$(git branch --show-current)'
+
+gpush () {
+    if [[ $# -eq 1 ]]; then
+        echo '~/.aliases: git push $1 $(git branch --show-current):$(git branch --show-current)'
+        git push $1 $(git branch --show-current):$(git branch --show-current)
+    else
+        echo '~/.aliases: git push origin $(git branch --show-current):$(git branch --show-current)'    
+        git push origin $(git branch --show-current):$(git branch --show-current) 
+    fi
+}
+
+alias gpusho='gpush'
 alias gopen="git open"
 
 # commonly used Shell commands
