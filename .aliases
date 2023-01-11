@@ -1,3 +1,5 @@
+#! /usr/bin/env zsh
+
 # Aliases - Naming Rules:
 # 1. No uppercase letters
 # 2. No delimiter between words
