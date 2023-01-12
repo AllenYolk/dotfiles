@@ -10,7 +10,7 @@ dotfile_list=(
 )
 
 for df in ${dotfile_list[*]}; do
-    if [[ -f ~/${df} ]]; then
+    if [[ -L ~/${df} ]]; then
         rm -f ~/${df}
     fi
     ln -s $(pwd)/${df} ~/${df}
