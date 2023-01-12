@@ -150,3 +150,5 @@ else
     echo "Please place the conda initialization program in ~/.conda/.init"
 fi
 # <<< conda initialize <<
+
+eval $(thefuck --alias)
