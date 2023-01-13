@@ -3,3 +3,5 @@
 	email = huang2627099045@gmail.com
 [core]
 	editor = vim
+[commit]
+	template = ~/.gitcommitmessage

@@ -1,0 +1,21 @@
+# <type>(optional scope): <subject>
+
+# <optional body>
+
+# <optional footer(s)>
+
+
+# <<<<<< HINTS BEGIN <<<<<<
+# type: one of the 7 terms
+#       feat, fix, docs, style, refactor, test, 
+#       chore (construction process, dependencies)
+# scope: the range of the commit's influenc
+# subject: brief description
+#          start with a verb (active voice, present tense)
+#          first letter -> lowercase
+#          end without period (.)
+# footer: two possible cases
+#         BREAKING CHANGE: xxx (incompatible with the previous ver.)
+#         Closes #xxx (issuse id)
+# >>>>>> HINTS END >>>>>>
+

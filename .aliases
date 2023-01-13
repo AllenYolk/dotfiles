@@ -23,10 +23,11 @@ gpush () {
 }
 
 alias gpusho='gpush'
-alias gopen="git open"
+alias gpull="git pull"
 
 # commonly used Shell commands
 alias l="ls -lha"
 
 # Oh-my-zsh plugins
 alias aliases="acs"
+alias gopen="git open"

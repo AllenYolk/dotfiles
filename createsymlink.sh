@@ -2,6 +2,7 @@
 
 dotfile_list=(
     .aliases 
+    .gitcommitmessage
     .gitconfig 
     .p10k.zsh 
     .tmux.conf 
