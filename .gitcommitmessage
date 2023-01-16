@@ -9,9 +9,9 @@
 # type: one of the 7 terms
 #       feat, fix, docs, style, refactor, test, 
 #       chore (construction process, dependencies)
-# scope: the range of the commit's influenc
+# scope: the range of the commit's influence
 # subject: brief description
-#          start with a verb (active voice, present tense)
+#          start with a verb (i.e. an imperative sentence)
 #          first letter -> lowercase
 #          end without period (.)
 # footer: two possible cases
