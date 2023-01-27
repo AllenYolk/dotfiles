@@ -31,3 +31,6 @@ alias l="ls -lha"
 # Oh-my-zsh plugins
 alias aliases="acs"
 alias gopen="git open"
+
+# radian: a better R console
+alias r="radian"
