@@ -34,3 +34,7 @@ alias gopen="git open"
 
 # radian: a better R console
 alias r="radian"
+
+# pip
+alias pinstall="pip install ."
+
