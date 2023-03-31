@@ -38,3 +38,5 @@ alias r="radian"
 # pip
 alias pinstall="pip install ."
 
+# nvidia-smi: gpu monitoring
+alias wnv="watch -n 0.5 nvidia-smi"
