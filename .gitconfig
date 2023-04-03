@@ -5,7 +5,3 @@
 	editor = vim
 [commit]
 	template = ~/.gitcommitmessage
-[http]
-	proxy = http://127.0.0.1:15732
-[https]
-	proxy = http://127.0.0.1:15732
