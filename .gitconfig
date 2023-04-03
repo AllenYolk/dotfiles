@@ -1,7 +1,11 @@
 [user]
 	name = AllenYolk
-	email = huang2627099045@gmail.com
+	email = allen.yfhuang@gmail.com
 [core]
 	editor = vim
 [commit]
 	template = ~/.gitcommitmessage
+[http]
+	proxy = http://127.0.0.1:15732
+[https]
+	proxy = http://127.0.0.1:15732
