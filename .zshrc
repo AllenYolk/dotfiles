@@ -93,7 +93,9 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-export MANPATH="${MANPATH}:$(tldr --manpath)"
+if [[ $HOST == "bogon" ]]; then
+    export MANPATH="${MANPATH}:$(tldr --manpath)"
+fi
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
