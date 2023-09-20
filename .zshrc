@@ -81,7 +81,6 @@ plugins=(
     aliases 
     autojump
     colored-man-pages
-    thefuck
     web-search
     zsh-autosuggestions
     zsh-syntax-highlighting
@@ -151,4 +150,3 @@ else
 fi
 # <<< conda initialize <<
 
-eval $(thefuck --alias)
