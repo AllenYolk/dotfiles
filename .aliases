@@ -28,6 +28,7 @@ alias gpull="git pull"
 # commonly used Shell commands
 alias l="ls -lha"
 alias df="df -h"
+alias c="clear"
 
 # Oh-my-zsh plugins
 alias aliases="acs"
