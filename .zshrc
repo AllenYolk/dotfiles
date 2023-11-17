@@ -86,6 +86,7 @@ plugins=(
     zsh-syntax-highlighting
     git-open
     extract
+    zsh-vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
