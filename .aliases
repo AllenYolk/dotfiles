@@ -34,14 +34,9 @@ alias c="clear"
 alias aliases="acs"
 alias gopen="git open"
 
-# radian: a better R console
-alias r="radian"
-
 # citation refiner
 alias cr="citation_refiner"
 
-# pip
-alias pinstall="pip install ."
-
 # nvidia-smi: gpu monitoring
 alias wnv="watch -n 0.5 nvidia-smi"
+alias nt="nvitop"
