@@ -13,13 +13,10 @@ alias gamend="git commit -a --amend"
 alias gremote="git remote -v"
 
 gpush () {
-    if [[ $# -eq 1 ]]; then
-        echo '~/.aliases: git push $1 $(git branch --show-current):$(git branch --show-current)'
-        git push $1 $(git branch --show-current):$(git branch --show-current)
-    else
-        echo '~/.aliases: git push origin $(git branch --show-current):$(git branch --show-current)'    
-        git push origin $(git branch --show-current):$(git branch --show-current) 
-    fi
+    for rm in $(git remote); do
+        echo "git push $rm $(git branch --show-current):$(git branch --show-current)"
+        git push $rm $(git branch --show-current):$(git branch --show-current)
+    done
 }
 
 alias gpusho='gpush'
