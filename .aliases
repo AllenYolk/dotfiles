@@ -14,8 +14,10 @@ alias gremote="git remote -v"
 
 gpush () {
     for rm in $(git remote); do
+        echo "=================================================================="
         echo "git push $rm $(git branch --show-current):$(git branch --show-current)"
         git push $rm $(git branch --show-current):$(git branch --show-current)
+        echo "=================================================================="
     done
 }
 
