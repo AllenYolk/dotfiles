@@ -154,5 +154,8 @@ else
 fi
 # <<< conda initialize <<
 
+# fzf configurations
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 export FZF_DEFAULT_OPTS="--layout reverse --height ~50% --border double --border-label '| fzf |' --margin 1,3% --padding 0,1 --marker '✔' --prompt '> ' --header 'Use CTRL-C or ESC to quit' --preview 'tree {-1} -C'"
 
