@@ -86,6 +86,7 @@ plugins=(
     zsh-syntax-highlighting
     git-open
     extract
+    zsh-interactive-cd
     zsh-vi-mode
 )
 
@@ -152,4 +153,6 @@ else
     echo "Please place the conda initialization program in ~/.conda/.init"
 fi
 # <<< conda initialize <<
+
+export FZF_DEFAULT_OPTS="--layout reverse --height ~50% --border double --border-label '| fzf |' --margin 1,3% --padding 0,1 --marker '✔' --prompt '> ' --header 'Use CTRL-C or ESC to quit' --preview 'tree {-1} -C'"
 

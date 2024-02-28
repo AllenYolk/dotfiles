@@ -27,11 +27,12 @@ alias gpull="git pull"
 
 # commonly used Shell commands
 alias l="ls -lha"
+alias lf="l | fzf"
 alias df="df -h"
 alias c="clear"
 
 # Oh-my-zsh plugins
-alias aliases="acs"
+alias aliases="als"
 alias gopen="git open"
 
 # citation refiner
@@ -40,3 +41,7 @@ alias cr="citation_refiner"
 # nvidia-smi: gpu monitoring
 alias wnv="watch -n 0.5 nvidia-smi"
 alias nt="nvitop"
+
+# conda
+alias ca="conda activate"
+
