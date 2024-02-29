@@ -72,6 +72,9 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# fzf initialization
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -86,9 +89,12 @@ plugins=(
     zsh-syntax-highlighting
     git-open
     extract
-    zsh-interactive-cd
     zsh-vi-mode
 )
+
+zvm_after_init () {
+    source ~/.oh-my-zsh/plugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
+}
 
 source $ZSH/oh-my-zsh.sh
 
@@ -154,8 +160,6 @@ else
 fi
 # <<< conda initialize <<
 
-# fzf configurations
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
+# fzf default options (for a better layout)
 export FZF_DEFAULT_OPTS="--layout reverse --height ~50% --border double --border-label '| fzf |' --margin 1,3% --padding 0,1 --marker '✔' --prompt '> ' --header 'Use CTRL-C or ESC to quit' --preview 'tree {-1} -C'"
 

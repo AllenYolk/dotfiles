@@ -30,6 +30,16 @@ alias lf="l | fzf"
 alias df="df -h"
 alias c="clear"
 
+src () {
+    echo "~/.zshrc sourced"
+    source ~/.zshrc
+    if [ -d "$HOME/.oh-my-zsh" ]; then
+        echo "oh-my-zsh reloaded"
+        omz reload
+    fi
+}
+alias vrc="vim ~/.zshrc"
+
 # Oh-my-zsh plugins
 alias aliases="als"
 alias gopen="git open"
