@@ -5,9 +5,6 @@
     "Blue Component" : 0,
     "Green Component" : 0.078431372549019607
   },
-  "Tags" : [
-    "Dynamic"
-  ],
   "Ansi 12 Color" : {
     "Red Component" : 0.39215686274509803,
     "Color Space" : "sRGB",
@@ -97,7 +94,6 @@
   "BM Growl" : true,
   "Command" : "",
   "Description" : "Default",
-  "Dynamic Profile Filename" : "\/Users\/allenyolk\/Library\/Application Support\/iTerm2\/DynamicProfiles\/vscode-synced.json",
   "Mouse Reporting" : true,
   "Screen" : -1,
   "Selection Color" : {
