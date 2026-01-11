@@ -135,40 +135,38 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-#
-# e.g. The following commands are placed in ~/.conda/.init .
-#```
-#__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-#if [ $? -eq 0 ]; then
-#    eval "$__conda_setup"
-#else
-#    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-#        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
-#    else
-#        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
-#    fi
-#fi
-#unset __conda_setup
-#```
-if [[ -f ~/.conda/.init ]]; then
-    source ~/.conda/.init
-else
-    echo "Please place the conda initialization program in ~/.conda/.init"
-fi
-# <<< conda initialize <<
-
 # fzf default options (for a better layout)
 export FZF_DEFAULT_OPTS="--layout reverse --height ~50% --border double --border-label '| fzf |' --margin 1,3% --padding 0,1 --marker '✔' --prompt '> ' --header 'Use CTRL-C or ESC to quit' --preview 'tree {-1} -C'"
 
+# Other env init commands:
+#
+# 1. Conda initialization
+#
+# Put the following code in ~/.local/bin/env
+#```
+# >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+    # eval "$__conda_setup"
+# else
+    # if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+        # . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    # else
+        # export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+    # fi
+# fi
+# unset __conda_setup
+# <<< conda initialize <<
+#```
+#
+# 2. NVM initialization
+#
+# Put the following code in ~/.local/bin/env
+#````
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-if [[ -f ~/.nvm/.init ]]; then
-    source ~/.nvm/.init
-else
-    echo "Please place the nvm initialization program in ~/.nvm/.init"
-fi
+#````
 
+. "$HOME/.local/bin/env"
