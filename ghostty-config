@@ -51,3 +51,5 @@
 theme = "Catppuccin Macchiato"
 font-family = "MesloLGS NF"
 font-size = 12
+shell-integration-features = ssh-terminfo,ssh-env
+
