@@ -1,11 +1,11 @@
 #! /usr/bin/env zsh
 
 dotfile_list=(
-    .aliases 
+    .aliases
     .gitcommitmessage
-    .gitconfig 
-    .p10k.zsh 
-    .tmux.conf 
+    .gitconfig
+    .p10k.zsh
+    .tmux.conf
     .vimrc
     .zshrc
 )

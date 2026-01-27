@@ -138,11 +138,10 @@ fi
 # fzf default options (for a better layout)
 export FZF_DEFAULT_OPTS="--layout reverse --height ~50% --border double --border-label '| fzf |' --margin 1,3% --padding 0,1 --marker '✔' --prompt '> ' --header 'Use CTRL-C or ESC to quit' --preview 'tree {-1} -C'"
 
-# Other env init commands:
+# Other env init commands should be put in ~/.local/bin/env
 #
 # 1. Conda initialization
 #
-# Put the following code in ~/.local/bin/env
 #```
 # >>> conda initialize >>>
 # # !! Contents within this block are managed by 'conda init' !!
@@ -162,11 +161,33 @@ export FZF_DEFAULT_OPTS="--layout reverse --height ~50% --border double --border
 #
 # 2. NVM initialization
 #
-# Put the following code in ~/.local/bin/env
 #````
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 #````
+#
+# 3. uv initialization
+#
+# ```
+# #!/bin/sh
+# # add binaries to PATH if they aren't added yet
+# # affix colons on either side of $PATH to simplify matching
+# case ":${PATH}:" in
+    # *:"$HOME/.local/bin":*)
+        # ;;
+    # *)
+        # # Prepending path in case a system-installed binary needs to be overridden
+        # export PATH="$HOME/.local/bin:$PATH"
+        # ;;
+# esac
+# ```
+#
+# 4. opencode path appended to PATH
+#
+# ```
+# export PATH=/Users/allenyolk/.opencode/bin:$PATH
+# ```
+#
 
 . "$HOME/.local/bin/env"
