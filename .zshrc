@@ -72,16 +72,13 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# fzf initialization
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    aliases 
+    aliases
     autojump
     colored-man-pages
     web-search
@@ -91,10 +88,6 @@ plugins=(
     extract
     zsh-vi-mode
 )
-
-zvm_after_init () {
-    source ~/.oh-my-zsh/plugins/zsh-interactive-cd/zsh-interactive-cd.plugin.zsh
-}
 
 source $ZSH/oh-my-zsh.sh
 
@@ -134,9 +127,6 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# fzf default options (for a better layout)
-export FZF_DEFAULT_OPTS="--layout reverse --height ~50% --border double --border-label '| fzf |' --margin 1,3% --padding 0,1 --marker '✔' --prompt '> ' --header 'Use CTRL-C or ESC to quit' --preview 'tree {-1} -C'"
 
 # Other env init commands should be put in ~/.local/bin/env
 #
