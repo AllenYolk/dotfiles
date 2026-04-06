@@ -1,0 +1,119 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "git_panel": {
+    "tree_view": true,
+  },
+  "ssh_connections": [
+    {
+      "host": "g3",
+      "args": [],
+      "projects": [
+        {
+          "paths": ["/home/allenyolk/CodeRepo/snn-online-learning"],
+        },
+      ],
+    },
+  ],
+  "ui_font_family": "Inter",
+  "agent_servers": {
+    "github-copilot-cli": {
+      "type": "registry",
+    },
+    "claude-acp": {
+      "type": "registry",
+    },
+  },
+  "edit_predictions": {
+    "copilot": {
+      "enable_next_edit_suggestions": true,
+    },
+    "mode": "eager",
+    "provider": "copilot",
+  },
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "buffer_line_height": "comfortable",
+  "buffer_font_weight": 400.0,
+  "terminal": {
+    "font_size": 13.0,
+    "env": {
+      "LANG": "\"en_US.UTF-8\"",
+    },
+    "font_family": "MesloLGS NF",
+  },
+  "relative_line_numbers": "enabled",
+  "gutter": {
+    "line_numbers": true,
+  },
+  "tabs": {
+    "close_position": "right",
+    "file_icons": true,
+    "git_status": false,
+    "activate_on_close": "history",
+    "show_close_button": "hover",
+    "show_diagnostics": "off",
+  },
+  "soft_wrap": "editor_width",
+  "base_keymap": "VSCode",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "vim_mode": true,
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Macchiato",
+  },
+  "ui_font_size": 15.0,
+  "buffer_font_size": 13.0,
+  "theme": {
+    "mode": "dark",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Macchiato",
+  },
+  "languages": {
+    "Python": {
+      "language_servers": ["basedpyright", "ruff"],
+      "inlay_hints": {
+        "enabled": true,
+        "show_type_hints": false,
+        "show_parameter_hints": true,
+        "show_other_hints": true,
+      },
+    },
+  },
+  "lsp": {
+    "basedpyright": {
+      "settings": {
+        "basedpyright.analysis": {
+          "diagnosticSeverityOverrides": {
+            "reportArgumentType": "hint",
+            "reportIncompatibleMethodOverride": "none",
+            "reportAttributeAccessIssue": "none",
+            "reportOperatorIssue": "none",
+            // "reportIndexIssue": "none",
+            "reportOptionalMemberAccess": "none",
+            "reportOptionalOperand": "none",
+            "reportCallIssue": "none",
+            "reportAssignmentType": "none",
+            "reportAbstractUsage": "none",
+          },
+        },
+      },
+    },
+  },
+  "diagnostics_max_severity": "warning",
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+      "max_severity": "warning",
+    },
+  },
+}
