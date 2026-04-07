@@ -20,6 +20,11 @@
         },
       ],
     },
+    {
+      "host": "g2",
+      "args": [],
+      "projects": [],
+    },
   ],
   "ui_font_family": "Inter",
   "agent_servers": {
@@ -98,12 +103,22 @@
             "reportIncompatibleMethodOverride": "none",
             "reportAttributeAccessIssue": "none",
             "reportOperatorIssue": "none",
-            // "reportIndexIssue": "none",
+            "reportIndexIssue": "none",
             "reportOptionalMemberAccess": "none",
             "reportOptionalOperand": "none",
             "reportCallIssue": "none",
             "reportAssignmentType": "none",
             "reportAbstractUsage": "none",
+            "reportPrivateImportUsage": "none",
+          },
+        },
+      },
+    },
+    "ruff": {
+      "initialization_options": {
+        "settings": {
+          "lint": {
+            "ignore": ["F403"],
           },
         },
       },
