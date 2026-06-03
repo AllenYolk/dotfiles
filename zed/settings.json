@@ -7,9 +7,43 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "show_edit_predictions": false,
   "diff_view_style": "split",
   "language_models": {
     "openai_compatible": {
+      "Xiaomi": {
+        "api_url": "https://api.xiaomimimo.com/v1",
+        "available_models": [
+          {
+            "name": "mimo-v2.5",
+            "max_tokens": 1048576,
+            "max_output_tokens": 131072,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false
+            }
+          },
+          {
+            "name": "mimo-v2.5-pro",
+            "max_tokens": 1048576,
+            "max_output_tokens": 131072,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false
+            }
+          }
+        ]
+      },
       "minimax-cn": {
         "api_url": "https://api.minimaxi.com/v1",
         "available_models": [
@@ -41,8 +75,8 @@
     },
     "default_profile": "write",
     "default_model": {
-      "provider": "zed.dev",
-      "model": "grok-4-fast-reasoning",
+      "provider": "Xiaomi",
+      "model": "mimo-v2.5",
       "enable_thinking": false,
     },
     "favorite_models": [],
@@ -125,6 +159,7 @@
   },
   "languages": {
     "Python": {
+      "show_edit_predictions": true,
       "language_servers": ["basedpyright", "ruff"],
       "inlay_hints": {
         "enabled": true,
@@ -174,6 +209,7 @@
             "reportInvalidTypeForm": "none",
             "reportUninitializedInstanceVariable": "none",
             "reportImplicitRelativeImport": "none",
+            "reportConstantRedefinition": "none",
             "reportMissingTypeStubs": "none",
           },
         },
