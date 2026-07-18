@@ -46,8 +46,16 @@ Linux 使用发行版包管理器安装 Neovim、Git、ripgrep、fd、fzf、Tree
 
 ## 验证
 
+先进行不会加载配置、不会触发下载的静态检查：
+
 ```bash
 nvim --version
+test -f "$HOME/.config/nvim/init.lua"
+```
+
+完整启动验证会加载 `lazy.lua` 和 Tree-sitter 配置；若 lazy.nvim 或 parser 缺失，它可能克隆或下载内容。因此只有在用户已确认网络写入后才可执行：
+
+```bash
 nvim --headless -u "$HOME/.config/nvim/init.lua" '+qa!'
 ```
 
