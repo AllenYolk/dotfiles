@@ -61,26 +61,36 @@ return {
   },
 
   {
-    "supermaven-inc/supermaven-nvim",
+    "milanglacier/minuet-ai.nvim",
     event = "InsertEnter",
-    cmd = {
-      "SupermavenStatus",
-      "SupermavenToggle",
-      "SupermavenUseFree",
-      "SupermavenUsePro",
-    },
     opts = {
-      keymaps = {
-        accept_suggestion = "<C-l>",
-        accept_word = "<C-j>",
-        clear_suggestion = "<C-]>",
+      provider = "openai_compatible",
+      request_timeout = 2.5,
+      throttle = 1500,
+      debounce = 600,
+      virtualtext = {
+        auto_trigger_ft = { "*" },
+        auto_trigger_ignore_ft = { "help", "markdown", "oil" },
+        keymap = {
+          accept = "<C-l>",
+          accept_line = "<C-j>",
+          dismiss = "<C-]>",
+        },
+        show_on_completion_menu = false,
       },
-      ignore_filetypes = {
-        help = true,
-        markdown = true,
-        oil = true,
+      provider_options = {
+        openai_compatible = {
+          api_key = require("config.credentials").opencode_go_api_key,
+          end_point = "https://opencode.ai/zen/go/v1/chat/completions",
+          model = "deepseek-v4-flash",
+          name = "OpenCode Go",
+          optional = {
+            max_tokens = 56,
+            top_p = 0.9,
+            thinking = { type = "disabled" },
+          },
+        },
       },
-      log_level = "off",
     },
   },
 

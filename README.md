@@ -9,7 +9,7 @@ My dotfiles for Linux / macOS.
 `~/.config/nvim`; an existing non-link configuration is left untouched.
 
 The configuration targets Python, Markdown, terminal workflows, WakaTime, and
-Supermaven. See [docs/neovim-user-guide.md](docs/neovim-user-guide.md) for
+Minuet with OpenCode Go. See [docs/neovim-user-guide.md](docs/neovim-user-guide.md) for
 dependencies, deployment, keymaps, and the agent deployment prompt.
 
 ## Notice
