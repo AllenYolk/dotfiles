@@ -28,8 +28,8 @@ nvim .
 | Find a file or search the project | `<Space>ff` / `<Space>fg` |
 | Read or edit Python | `gd`, `K`, `<Space>ca`, `<Space>cf` |
 | Work with Markdown | `:RenderMarkdown toggle`, `:RenderMarkdown preview` |
-| Inspect a file's Git changes | `<Space>hp`, `<Space>hd` |
-| Stage a selected change | `<Space>hs`, then `git diff --cached` |
+| Inspect a file's Git changes | `<Space>gp`, `<Space>gd` |
+| Stage a selected change | `<Space>gs`, then `git diff --cached` |
 | Search Git objects | `<Space>gg`, `<Space>gc`, or `<Space>gb` |
 | Run full Git commands | `<Space>tn` |
 
@@ -129,16 +129,16 @@ Use `:diffoff!` to leave diff mode; use `:only` if you also want to close the ex
 
 ### Git Keymaps
 
-These mappings are buffer-local: they exist only for files attached to Gitsigns in a Git worktree.
+The Gitsigns mappings below are buffer-local: they exist only for files attached to Gitsigns in a Git worktree. The fzf-lua picker mappings are global and can run from any normal buffer.
 
 | Mapping | Action |
 | --- | --- |
 | `]h` / `[h` | Next / previous hunk |
-| `<Space>hp` / `<Space>hi` | Preview current hunk in a popup / inline |
-| `<Space>hd` / `<Space>hD` | Diff current file against index / `HEAD` |
-| `<Space>hs` / `<Space>hr` | Stage or reset current hunk; in Visual mode, stage or reset the selection |
-| `<Space>hS` / `<Space>hR` | Stage or reset every hunk in the current file |
-| `<Space>hb` | Full blame for the current line |
+| `<Space>gp` / `<Space>gi` | Preview current hunk in a popup / inline |
+| `<Space>gd` / `<Space>gD` | Diff current file against index / `HEAD` |
+| `<Space>gs` / `<Space>gr` | Stage or reset current hunk; in Visual mode, stage or reset the selection |
+| `<Space>gS` / `<Space>gR` | Stage or reset every hunk in the current file |
+| `<Space>gl` | Full blame for the current line |
 | `<Space>gg` | Open fzf-lua Git status |
 | `<Space>gc` / `<Space>gC` | Open project / current-buffer commit history |
 | `<Space>gb` | Open the branch picker |
@@ -152,7 +152,7 @@ These mappings are buffer-local: they exist only for files attached to Gitsigns 
 | `:Gitsigns stage_buffer` | Stage all changes in the current file. Review the diff first. |
 | `:Gitsigns reset_buffer` | Restore all hunks in the current file from the index; discards unstaged changes. |
 
-The commands remain useful for advanced cases. `reset_hunk` and `reset_buffer`, including `<Space>hr` and `<Space>hR`, are destructive worktree operations, so preview first.
+The commands remain useful for advanced cases. `reset_hunk` and `reset_buffer`, including `<Space>gr` and `<Space>gR`, are destructive worktree operations, so preview first.
 
 ### Blame, Revisions, and Pickers
 
@@ -167,13 +167,13 @@ The commands remain useful for advanced cases. `reset_hunk` and `reset_buffer`, 
 | `:FzfLua git_branches` | Browse branches and use the picker actions |
 | `:FzfLua git_files` | Search tracked files only |
 
-The Git picker mappings lazy-load fzf-lua automatically, so `<Space>gg`, `<Space>gc`, `<Space>gC`, and `<Space>gb` work in a fresh session. The `:FzfLua` commands remain available after the plugin has loaded.
+The Git picker mappings lazy-load fzf-lua automatically, so `<Space>gg`, `<Space>gc`, `<Space>gC`, and `<Space>gb` work in a fresh session. In the branch picker, `Enter` switches branches, `Ctrl-a` creates a branch, and `Ctrl-x` deletes a branch. Check `git status --short` first and use the destructive branch action only deliberately. The `:FzfLua` commands remain available after the plugin has loaded.
 
 ### Commit Review Loop
 
 1. Run `<Space>gg` or `git status --short`.
-2. Review each file with `<Space>hp` or `<Space>hd`.
-3. Run `<Space>hs` only for reviewed changes. Run it again on a staged hunk to unstage it.
+2. Review each file with `<Space>gp` or `<Space>gd`.
+3. Run `<Space>gs` only for reviewed changes. Run it again on a staged hunk to unstage it.
 4. Open a terminal with `<Space>tn`, inspect `git diff --cached`, and run project tests.
 5. Run `git commit`, then confirm the result with `git status`.
 
