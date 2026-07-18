@@ -4,7 +4,7 @@
 
 ## 配置内容
 
-配置启用鼠标、vi 模式窗格导航、10,000 行历史、`xterm-256color`、OSC52 相关的 `set-clipboard on`，并声明 TPM、`vim-tmux-navigator` 及 Dracula 状态栏插件。
+配置启用鼠标、vi 模式窗格导航、10,000 行历史、`xterm-256color`、OSC52 相关的 `set-clipboard on`，并声明 TPM 和 `vim-tmux-navigator`。Dracula 的状态栏选项存在，但其 TPM 插件声明目前被注释，因此不会自动启用。
 
 ## 设置
 

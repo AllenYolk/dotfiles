@@ -18,7 +18,7 @@
 
 | 配置 | 内容 | 设置说明 |
 | --- | --- | --- |
-| Shell | Zsh、Oh My Zsh 别名和 Powerlevel10k | [Shell 与提示符](docs/operations/shell.md) |
+| Shell | Zsh、Oh My Zsh 别名和 Powerlevel10k | [Shell 与提示符](docs/operations/shell.md)（agent 不修改 `~/.zshrc`） |
 | Git | 身份、Vim 编辑器和提交模板 | [Git](docs/operations/git.md) |
 | tmux | 窗格导航、剪贴板和 TPM 插件声明 | [tmux](docs/operations/tmux.md) |
 | Neovim | Python/Markdown 开发、终端和 AI 补全 | [Neovim 设置](docs/operations/neovim.md) · [使用手册](docs/neovim-user-guide.md) |

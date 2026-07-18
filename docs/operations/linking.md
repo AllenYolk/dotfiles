@@ -22,13 +22,12 @@ test -d "$repo/nvim"
 ln -s "$repo/.tmux.conf" "$HOME/.tmux.conf"
 ```
 
-不得使用强制选项，也不得在一条命令里处理多个领域。Neovim 的目录和逐项链接规则见 [Neovim 操作](neovim.md)。
+不得使用强制选项，也不得在一条命令里处理多个领域。同一领域的每个目标也独立确认、创建或跳过：一个目标冲突只停止该目标，不能阻止其余无冲突目标。Neovim 的目录和逐项链接规则见 [Neovim 操作](neovim.md)。
 
 ## 受管理清单
 
 | 领域 | 来源 | 目标 |
 | --- | --- | --- |
-| Shell | `.zshrc` | `~/.zshrc` |
 | Shell | `.aliases` | `~/.aliases` |
 | Shell | `.p10k.zsh` | `~/.p10k.zsh` |
 | Git | `.gitconfig` | `~/.gitconfig` |
@@ -40,6 +39,8 @@ ln -s "$repo/.tmux.conf" "$HOME/.tmux.conf"
 | Neovim | `nvim/lua` | `~/.config/nvim/lua` |
 
 Ghostty 目标随操作系统而变，单独见 [Ghostty 操作](ghostty.md)。
+
+`.zshrc` 是仓库来源但不是可部署条目：上级安全规则禁止 agent 修改 `~/.zshrc`。agent 只能报告其存在，不能创建、替换或链接它。
 
 ## 冲突与回滚
 
