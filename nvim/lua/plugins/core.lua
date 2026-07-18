@@ -19,6 +19,10 @@ return {
       { "<leader>fg", function() require("fzf-lua").live_grep() end, desc = "Live grep" },
       { "<leader>fb", function() require("fzf-lua").buffers() end, desc = "Find buffers" },
       { "<leader>fh", function() require("fzf-lua").help_tags() end, desc = "Help tags" },
+      { "<leader>gg", function() require("fzf-lua").git_status() end, desc = "Git status" },
+      { "<leader>gc", function() require("fzf-lua").git_commits() end, desc = "Git commits" },
+      { "<leader>gC", function() require("fzf-lua").git_bcommits() end, desc = "Git buffer commits" },
+      { "<leader>gb", function() require("fzf-lua").git_branches() end, desc = "Git branches" },
     },
     opts = {},
   },
@@ -32,7 +36,35 @@ return {
     opts = {},
   },
 
-  { "lewis6991/gitsigns.nvim", opts = {} },
+  {
+    "lewis6991/gitsigns.nvim",
+    opts = {
+      on_attach = function(buffer)
+        local gitsigns = require("gitsigns")
+        local map = function(mode, keys, action, description)
+          vim.keymap.set(mode, keys, action, { buffer = buffer, desc = description })
+        end
+
+        map("n", "]h", function() gitsigns.nav_hunk("next") end, "Next Git hunk")
+        map("n", "[h", function() gitsigns.nav_hunk("prev") end, "Previous Git hunk")
+        map("n", "<leader>hs", gitsigns.stage_hunk, "Stage hunk")
+        map("n", "<leader>hr", gitsigns.reset_hunk, "Reset hunk")
+        map("v", "<leader>hs", function()
+          gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end, "Stage selection")
+        map("v", "<leader>hr", function()
+          gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+        end, "Reset selection")
+        map("n", "<leader>hS", gitsigns.stage_buffer, "Stage buffer")
+        map("n", "<leader>hR", gitsigns.reset_buffer, "Reset buffer")
+        map("n", "<leader>hp", gitsigns.preview_hunk, "Preview hunk")
+        map("n", "<leader>hi", gitsigns.preview_hunk_inline, "Preview hunk inline")
+        map("n", "<leader>hb", function() gitsigns.blame_line({ full = true }) end, "Blame line")
+        map("n", "<leader>hd", gitsigns.diffthis, "Diff against index")
+        map("n", "<leader>hD", function() gitsigns.diffthis("HEAD") end, "Diff against HEAD")
+      end,
+    },
+  },
   { "folke/which-key.nvim", event = "VeryLazy", opts = { delay = 500 } },
   { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = { options = { theme = "auto" } } },
   { "wakatime/vim-wakatime", lazy = false },
