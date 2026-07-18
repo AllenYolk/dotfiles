@@ -66,7 +66,7 @@ return {
     },
   },
   { "folke/which-key.nvim", event = "VeryLazy", opts = { delay = 200 } },
-  { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = { options = { theme = "auto" } } },
+  { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = { options = { theme = "auto", globalstatus = true } } },
   { "wakatime/vim-wakatime", lazy = false },
 
   {
@@ -139,6 +139,7 @@ return {
       },
     },
     opts = {
+      notify_on_error = true,
       formatters_by_ft = {
         python = { "ruff_format", "ruff_organize_imports" },
       },
@@ -156,8 +157,10 @@ return {
       vim.api.nvim_create_autocmd("BufWritePost", {
         group = vim.api.nvim_create_augroup("RuffLint", { clear = true }),
         pattern = "*.py",
-        callback = function()
-          lint.try_lint()
+        callback = function(args)
+          if vim.bo[args.buf].filetype == "python" then
+            lint.try_lint()
+          end
         end,
       })
     end,
@@ -175,6 +178,9 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown" },
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-    opts = {},
+    opts = {
+      file_types = { "markdown" },
+      completions = { lsp = { enabled = true } },
+    },
   },
 }

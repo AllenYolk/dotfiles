@@ -1,4 +1,5 @@
 local map = vim.keymap.set
+local opts = { silent = true }
 
 map("n", "<leader>w", "<cmd>write<cr>", { desc = "Save file" })
 map("n", "<leader>q", "<cmd>quit<cr>", { desc = "Quit window" })
@@ -24,3 +25,6 @@ map("n", "<leader>cd", function()
   vim.cmd.cd(vim.fn.fnameescape(directory))
   vim.notify("Working directory: " .. vim.fn.getcwd())
 end, { desc = "CD to file directory" })
+
+map("v", "<", "<gv", opts)
+map("v", ">", ">gv", opts)

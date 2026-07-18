@@ -1,8 +1,14 @@
 local lsp = vim.lsp
 
+local capabilities = lsp.protocol.make_client_capabilities()
+local blink_ok, blink = pcall(require, "blink.cmp")
+if blink_ok then
+  capabilities = blink.get_lsp_capabilities(capabilities)
+end
+
 local function on_attach(_, buffer)
   local map = function(keys, action, description)
-    vim.keymap.set("n", keys, action, { buffer = buffer, desc = description })
+    vim.keymap.set("n", keys, action, { buffer = buffer, silent = true, desc = description })
   end
 
   map("gd", lsp.buf.definition, "Go to definition")
@@ -15,8 +21,23 @@ local function on_attach(_, buffer)
   map("<leader>dd", vim.diagnostic.open_float, "Diagnostic details")
 end
 
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
+vim.diagnostic.config({
+  underline = true,
+  severity_sort = true,
+  virtual_text = { spacing = 2, source = "if_many" },
+  float = { border = "rounded", source = "if_many" },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "E",
+      [vim.diagnostic.severity.WARN] = "W",
+      [vim.diagnostic.severity.INFO] = "I",
+      [vim.diagnostic.severity.HINT] = "H",
+    },
+  },
+})
+
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { silent = true, desc = "Previous diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { silent = true, desc = "Next diagnostic" })
 
 local python_root_markers = {
   "pyproject.toml",
@@ -24,13 +45,18 @@ local python_root_markers = {
   "setup.py",
   "setup.cfg",
   "requirements.txt",
+  "Pipfile",
+  "poetry.lock",
   ".python-version",
   ".git",
 }
 
 lsp.config("basedpyright", {
+  cmd = { "basedpyright-langserver", "--stdio" },
+  filetypes = { "python" },
   on_attach = on_attach,
   root_markers = python_root_markers,
+  capabilities = capabilities,
   before_init = function(_, config)
     local root = config.root_dir
     if type(root) ~= "string" then
@@ -43,6 +69,8 @@ lsp.config("basedpyright", {
         config.settings = config.settings or {}
         config.settings.python = config.settings.python or {}
         config.settings.python.pythonPath = python
+        config.settings.python.venvPath = root
+        config.settings.python.venv = name
         return
       end
     end
@@ -53,13 +81,18 @@ lsp.config("basedpyright", {
         autoSearchPaths = true,
         diagnosticMode = "openFilesOnly",
         useLibraryCodeForTypes = true,
+        typeCheckingMode = "standard",
       },
     },
   },
 })
 
 lsp.config("marksman", {
+  cmd = { "marksman", "server" },
+  filetypes = { "markdown" },
   on_attach = on_attach,
+  root_markers = { ".marksman.toml", ".git" },
+  capabilities = capabilities,
 })
 
 lsp.enable({ "basedpyright", "marksman" })
