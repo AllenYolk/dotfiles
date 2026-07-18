@@ -11,7 +11,7 @@
 nvim --headless '+Lazy! sync' '+qa!'
 ```
 
-脚本会把 `nvim/` 链接到 `~/.config/nvim`；若该路径已有非链接配置，脚本会跳过并提示，不会覆盖。完整的依赖安装与验收要求见文末 Agent Prompt。
+脚本会把 `nvim/init.lua`、`nvim/lazy-lock.json` 和 `nvim/lua/` 分别链接到 `~/.config/nvim/`；目录本身保留为本机目录，因此 `.env` 等机器私有文件不会进入仓库。已有同名非链接对象会跳过并提示，不会覆盖。完整的依赖安装与验收要求见文末 Agent Prompt。
 
 ## 基本约定
 
@@ -104,7 +104,7 @@ OSC52 适合复制代码和文本，但会把选中内容通过终端控制序�
 
 ### AI 补全
 
-Minuet 通过 OpenCode Go 的 `deepseek-v4-flash` 在代码 buffer 中显示灰色 ghost text，并关闭模型思考以降低延迟。凭据优先读取 `OPENCODE_GO_API_KEY` 环境变量；本机也可从 `~/.hermes/.env` 读取同名变量。该密钥不会写入或同步到 dotfiles。
+Minuet 通过 OpenCode Go 的 `deepseek-v4-flash` 在代码 buffer 中显示灰色 ghost text，并关闭模型思考以降低延迟。凭据按以下优先级读取：`OPENCODE_GO_API_KEY` 环境变量、`OPENCODE_GO_API_KEY_FILE` 指向的私有文件、`~/.config/nvim/.env`、`~/.hermes/.env` 兼容回退。私有文件只需包含一行 `OPENCODE_GO_API_KEY=...`；该密钥不会写入或同步到 dotfiles。
 
 | 快捷键 | 作用 |
 |---|---|
@@ -355,7 +355,7 @@ Ctrl-w o       只保留当前窗口
 :Minuet virtualtext enable
 ```
 
-确认当前 buffer 不是 Markdown、帮助页或 Oil，并确认 `~/.hermes/.env` 或当前 Neovim 环境中存在 `OPENCODE_GO_API_KEY`；不要把密钥写入配置仓库。
+确认当前 buffer 不是 Markdown、帮助页或 Oil，并确认任一凭据来源中存在 `OPENCODE_GO_API_KEY`；不要把密钥写入配置仓库。
 
 ### WakaTime 没有记录
 
@@ -420,7 +420,7 @@ Neovim 中检查：
 - 调试：尚未安装 `nvim-dap`
 - 测试界面：未安装 neotest，直接使用 pytest 命令行
 - AI 补全：Minuet 已启用，使用 OpenCode Go 的 `deepseek-v4-flash`；没有安装 Copilot、Codeium 或其他 AI provider
-- 配置同步：通过本仓库的 `nvim/` 目录和符号链接完成，不自动同步密钥或机器本地状态
+- 配置同步：通过本仓库的 `nvim/` 受管理对象和逐项符号链接完成，不自动同步密钥或机器本地状态
 
 保持当前状态的好处是启动快、依赖少、服务器环境干净。只有当某项工作流确实出现重复劳动时，再增加对应插件。
 
@@ -446,15 +446,15 @@ Neovim 中检查：
 11. minuet-ai.nvim：通过 OpenCode Go 的 `deepseek-v4-flash` 提供 ghost text AI 补全；`Tab` 必须继续保留给 blink.cmp。
 
 【配置源】
-优先在当前仓库查找 `nvim/` 目录，其中包含 `init.lua`、`lazy-lock.json`、`lua/config/` 和 `lua/plugins/`。把它部署到目标用户的 `~/.config/nvim/`；不要把工作区绝对路径写进 Lua。若找不到该目录，只报告这个阻塞原因，不要凭空重写另一套配置。
+优先在当前仓库查找 `nvim/` 目录，其中包含 `init.lua`、`lazy-lock.json`、`lua/config/` 和 `lua/plugins/`。在 `~/.config/nvim/` 中仅链接这些受管理对象，保持目录本身为本机目录；不要把工作区绝对路径写进 Lua。若找不到该目录，只报告这个阻塞原因，不要凭空重写另一套配置。
 
 【安全和幂等原则】
 - 先识别操作系统、架构、当前用户、Neovim 版本和包管理器；重复执行不得产生重复安装或重复配置行。
 - 不要删除用户的项目、SSH 配置、Rustup、Python 环境或其他编辑器。
-- 若已有 ~/.config/nvim，先创建带时间戳的备份（除非确认它就是本配置），再部署；保留备份路径。
+- 若 ~/.config/nvim 是指向本配置源的旧目录软链接，先只解除该软链接并创建本机目录；不要删除其源目录。若已有同名受管理对象且不是本配置软链接，跳过并报告，不覆盖机器本地文件。
 - 只在确实需要且有 sudo 权限时使用 sudo。若 apt 中的 Neovim 版本低于 0.11，不要继续保留这个无用旧版本：改用官方新版本（优先用户目录/AppImage/tarball），验证成功后仅卸载旧的 apt Neovim 包，不要清理无关依赖。
 - 不安装 Mason、clangd、nvim-dap、neotest、LuaRocks、Node/Perl/Ruby provider，也不安装 Copilot、Codeium 或其他额外 AI provider。
-- 不要读取、复制、打印或提交 `~/.wakatime.cfg`、`~/.hermes/.env` 或其他凭据。WakaTime 仅复用目标用户已有的共享配置。
+- 不要读取、复制、打印或提交 `~/.wakatime.cfg`、`~/.config/nvim/.env`、`~/.hermes/.env` 或其他凭据。WakaTime 仅复用目标用户已有的共享配置。
 - 只有在 SSH 不可用、需要密码/二次认证或配置源缺失时才请求用户介入；不要猜测凭据。
 
 【本地依赖安装】
@@ -464,11 +464,11 @@ Neovim 中检查：
 - 安装后检查：nvim、git、rg、fd、fzf、tree-sitter、ruff、basedpyright-langserver、marksman 都能在 PATH 中找到。
 
 【部署配置】
-- 创建或链接 ~/.config/nvim，并复制配置源的完整目录结构；不要把工作区的绝对路径写进 Lua。
+- 创建 ~/.config/nvim 本机目录，并逐项链接 `init.lua`、`lazy-lock.json` 和 `lua/`；不要复制完整目录或把工作区的绝对路径写进 Lua。保留该目录中的本地 `.env` 等非受管理文件。
 - 确认 leader/localleader 都是空格，远程 SSH 会话中 Neovim 使用 OSC52 剪贴板。
 - 若目标机使用 tmux，幂等地确保 ~/.tmux.conf 含有：set -s set-clipboard on；不要重复添加。必要时重新加载 tmux 配置。
 - 启动 Neovim，让 init.lua 自动安装 lazy.nvim，然后执行 Lazy sync/安装缺失插件。不要启用 LuaRocks。
-- 配置 Minuet 使用 OpenCode Go 的 OpenAI-compatible Chat Completions endpoint 和 `deepseek-v4-flash`，保持 `Tab` 只用于 blink.cmp。密钥仅从目标机器已导出的 `OPENCODE_GO_API_KEY` 或 `~/.hermes/.env` 的同名变量读取，绝不写入仓库或复制到远程主机。
+- 配置 Minuet 使用 OpenCode Go 的 OpenAI-compatible Chat Completions endpoint 和 `deepseek-v4-flash`，保持 `Tab` 只用于 blink.cmp。密钥仅从目标机器已导出的 `OPENCODE_GO_API_KEY`、`OPENCODE_GO_API_KEY_FILE` 指向的私有文件、`~/.config/nvim/.env` 或 `~/.hermes/.env` 读取，绝不写入仓库或复制到远程主机。
 - 对 Python 项目识别 .venv 或 venv；不要创建或修改用户的虚拟环境。
 
 【远程主机】
