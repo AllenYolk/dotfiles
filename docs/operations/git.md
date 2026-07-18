@@ -1,23 +1,23 @@
-# Git 配置
+# Git Configuration
 
-本领域由 `.gitconfig` 和 `.gitcommitmessage` 组成。部署前先读 [链接协议](linking.md)。
+This domain contains `.gitconfig` and `.gitcommitmessage`. Read the [Linking Protocol](linking.md) before deployment.
 
-## 依赖
+## Dependencies
 
-安装前先检查 [依赖矩阵](dependencies.md)。`git` 是加载和使用本领域的必需工具；仓库将 `core.editor` 设为 `nvim`，因此需要 Neovim 才能编辑提交信息。macOS 可通过 Homebrew 安装 `git` 和 `neovim`，Linux 使用发行版包管理器。验证：
+`git` is required to use this domain. The repository configures `core.editor=nvim`, so Neovim is also required to edit commit messages. On macOS, Homebrew can install `git` and `neovim`; on Linux, use the distribution package manager.
 
 ```bash
 git --version
 nvim --version
 ```
 
-## 设置方式
+## Setup
 
-`.gitconfig` 当前包含用户姓名、邮箱、默认编辑器和提交模板路径。agent 在链接前必须将其中的身份与目标机器现有 `git config --global --get user.email` 的结果报告给用户；身份不一致或目标已存在时只跳过 `.gitconfig`，不得合并或覆盖。
+`.gitconfig` currently contains a personal name, email address, Neovim editor, and commit template path. Before linking it, report its identity alongside `git config --global --get user.email` on the target machine. If the identity differs or the target exists, skip only `.gitconfig`; never merge or overwrite it.
 
-`.gitconfig` 与 `.gitcommitmessage` 必须逐个检查和确认。目标不存在时即可创建对应链接；另一个目标发生冲突不得阻止它。提交模板只有在目标机器的 Git 配置将 `commit.template` 指向 `~/.gitcommitmessage` 时才会生效，agent 应报告这一依赖，但不能据此覆盖或阻止另一个无冲突目标。
+Check and confirm `.gitconfig` and `.gitcommitmessage` independently. An absent target may be linked even when the other target conflicts. The template is effective only when the target Git configuration points `commit.template` at `~/.gitcommitmessage`; report that dependency without overwriting or blocking another conflict-free target.
 
-## 验证
+## Verification
 
 ```bash
 git config --global --get user.name
@@ -25,8 +25,8 @@ git config --global --get user.email
 git config --global --get commit.template
 ```
 
-输出应指向预期身份和 `~/.gitcommitmessage`。不运行会创建提交的命令进行验证。
+The output should show the expected identity and `~/.gitcommitmessage`. Do not create a commit merely to verify the configuration.
 
-## 代理边界
+## Proxy Boundary
 
-不要把临时 VPN/代理写入仓库的 `.gitconfig`。需要代理时，优先使用当前会话环境或经用户确认的机器本地 Git 配置；完成后确认不会影响其他无 VPN 的机器。
+Do not write temporary VPN or proxy settings into the repository's `.gitconfig`. Prefer session state or a machine-local Git setting confirmed by the user, then ensure it cannot disrupt machines without the same VPN configuration.

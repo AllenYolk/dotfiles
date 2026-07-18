@@ -1,33 +1,31 @@
-# tmux 配置
+# tmux Configuration
 
-本领域管理 `.tmux.conf`。部署前先读 [链接协议](linking.md)。
+This domain manages `.tmux.conf`. Read the [Linking Protocol](linking.md) before deployment.
 
-## 依赖
+## Dependencies
 
-安装前先检查 [依赖矩阵](dependencies.md)。
-
-| 级别 | 工具或服务 | 用途 | 验证 |
+| Level | Tool or service | Purpose | Verification |
 | --- | --- | --- | --- |
-| 必需 | tmux | 加载本配置 | `tmux -V` |
-| 必需 | `xterm-256color` terminfo | 本配置设置的终端类型 | `infocmp xterm-256color` |
-| 必需 | TPM | `.tmux.conf` 无条件加载 `~/.tmux/plugins/tpm/tpm`；缺失会使插件加载报错 | `test -x ~/.tmux/plugins/tpm/tpm` |
-| 按需 | Git 与网络访问 | 首次安装 TPM 与其声明的 tmux 插件 | `git --version` |
-| 按需 | `vim-tmux-navigator`（由 TPM 安装） | 在 tmux 和 Neovim 之间导航 | TPM 插件目录存在 |
-| 平台相关 | 支持 OSC52 的终端 | `set-clipboard on` 的远程复制工作流 | 在目标终端手动复制测试 |
+| Required | tmux | Loads this configuration | `tmux -V` |
+| Required | `xterm-256color` terminfo | Terminal type configured by this file | `infocmp xterm-256color` |
+| Required | TPM | `.tmux.conf` unconditionally loads `~/.tmux/plugins/tpm/tpm`; without it plugin loading reports an error | `test -x ~/.tmux/plugins/tpm/tpm` |
+| Conditional | Git and network access | Initial installation of TPM and its declared plugins | `git --version` |
+| Conditional | `vim-tmux-navigator`, installed by TPM | Navigation between tmux and Neovim | TPM plugin directory exists |
+| Platform-specific | OSC52-capable terminal | Remote-copy workflow for `set-clipboard on` | Manually copy in the target terminal |
 
-macOS 可通过 Homebrew 安装 tmux；Linux 使用发行版包管理器。TPM 缺失时，先说明它会将插件下载到 `~/.tmux/plugins/tpm`，取得确认后再用其官方 Git 仓库安装；不得覆盖已有目录。
+On macOS, Homebrew can install tmux; on Linux, use the distribution package manager. When TPM is absent, explain that it downloads to `~/.tmux/plugins/tpm`, obtain confirmation, then install it from its official Git repository without overwriting an existing directory.
 
-## 配置内容
+## Configuration
 
-配置启用鼠标、vi 模式窗格导航、10,000 行历史、`xterm-256color`、OSC52 相关的 `set-clipboard on`，并声明 TPM 和 `vim-tmux-navigator`。Dracula 的状态栏选项存在，但其 TPM 插件声明目前被注释，因此不会自动启用。
+The configuration enables mouse support, vi-style pane navigation, 10,000 lines of history, `xterm-256color`, and OSC52-related `set-clipboard on`. It declares TPM and `vim-tmux-navigator`. Dracula status options are present, but its TPM plugin declaration is commented out, so it is not enabled automatically.
 
-## 设置
+## Setup
 
-确认 `tmux` 可执行，且 `~/.tmux.conf` 不存在后创建单一链接。TPM 的安装目录 `~/.tmux/plugins/tpm` 是机器本地插件状态，不受仓库管理；缺失时先报告，再由用户确认是否安装。不要因为插件目录不存在而编辑或替换 tmux 配置。
+After confirming that `tmux` is available and `~/.tmux.conf` is absent, create one link. TPM lives under `~/.tmux/plugins/tpm` as machine-local plugin state. If it is absent, report it and wait for confirmation; do not edit or replace the tmux configuration merely because plugins are missing.
 
-## 验证
+## Verification
 
-在新的 tmux server 中加载配置：
+Load the configuration in a new tmux server:
 
 ```bash
 tmux -L dotfiles-check -f "$HOME/.tmux.conf" start-server
@@ -35,4 +33,4 @@ tmux -L dotfiles-check show-options -s | grep 'set-clipboard'
 tmux -L dotfiles-check kill-server
 ```
 
-最后一条只关闭本次验证创建的、命名为 `dotfiles-check` 的 server；不得结束用户现有 tmux 会话。
+The final command closes only the verification server named `dotfiles-check`; never terminate an existing user tmux session.

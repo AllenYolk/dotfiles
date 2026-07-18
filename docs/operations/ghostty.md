@@ -1,24 +1,24 @@
-# Ghostty 配置
+# Ghostty Configuration
 
-仓库文件 `ghostty-config` 设置 Catppuccin Macchiato、MesloLGS NF 12pt 字体，以及 SSH shell integration。它不包含密钥或主机信息。
+The repository file `ghostty-config` sets Catppuccin Macchiato, MesloLGS NF at 12pt, and SSH shell integration. It contains no credentials or host information.
 
-## 依赖
+## Dependencies
 
-安装前先检查 [依赖矩阵](dependencies.md)。Ghostty 应用本身和 `MesloLGS NF` 字体是必需项；主题名称由 Ghostty 自带主题集解析。SSH shell integration 只在使用 SSH 时生效，并要求目标终端与远端系统支持相应 terminfo。先用 `ghostty +show-config --default --docs` 检查 CLI 是否可用和主题是否被识别；若缺少字体或应用，只报告安装需求，不更改系统字体或猜测安装路径。
+The Ghostty application and the `MesloLGS NF` font are required. Ghostty resolves the theme name from its bundled theme set. SSH shell integration applies only when SSH is used and requires appropriate terminal support and terminfo on the remote system. Use `ghostty +show-config --default --docs` to check that the CLI is available and the theme is recognized. If the application or font is missing, report the requirement without changing system fonts or guessing an installation path.
 
-## 目标路径
+## Target Paths
 
-Ghostty 的目标文件因平台而异，必须先用 `ghostty +show-config --default --docs` 或本机安装文档确认：
+The target differs by platform. Confirm the actual Ghostty installation and configuration path with `ghostty +show-config --default --docs` or the local application documentation:
 
-| 平台 | 常见目标 |
+| Platform | Common target |
 | --- | --- |
 | macOS | `~/Library/Application Support/com.mitchellh.ghostty/config` |
-| Linux（XDG） | `$XDG_CONFIG_HOME/ghostty/config`；未设置时为 `$HOME/.config/ghostty/config` |
+| Linux (XDG) | `$XDG_CONFIG_HOME/ghostty/config`; `$HOME/.config/ghostty/config` when unset |
 
-目标只作参考；agent 必须检查实际 Ghostty 安装和目标位置，不能创建猜测的目录树。
+These paths are references only. An agent must not create a guessed directory tree.
 
-## 设置与验证
+## Setup and Verification
 
-用户确认的目标不存在时，创建从 `ghostty-config` 到该目标的单一链接。重载 Ghostty 配置或打开新窗口后，确认主题、字体和 SSH shell integration 生效。
+After confirmation and only when the confirmed target is absent, create one link from `ghostty-config` to that target. Reload Ghostty configuration or open a new window, then confirm the theme, font, and SSH shell integration.
 
-若 `MesloLGS NF` 未安装，报告字体缺失和可选替代方案，不修改系统字体或更改仓库配置。
+If `MesloLGS NF` is absent, report the missing font and possible alternatives. Do not modify system fonts or change the repository configuration.
