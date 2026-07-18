@@ -45,8 +45,8 @@ return {
           vim.keymap.set(mode, keys, action, { buffer = buffer, desc = description })
         end
 
-        map("n", "]h", function() gitsigns.nav_hunk("next") end, "Next Git hunk")
-        map("n", "[h", function() gitsigns.nav_hunk("prev") end, "Previous Git hunk")
+        map("n", "<leader>gn", function() gitsigns.nav_hunk("next") end, "Next Git hunk")
+        map("n", "<leader>gN", function() gitsigns.nav_hunk("prev") end, "Previous Git hunk")
         map("n", "<leader>gs", gitsigns.stage_hunk, "Stage hunk")
         map("n", "<leader>gr", gitsigns.reset_hunk, "Reset hunk")
         map("v", "<leader>gs", function()

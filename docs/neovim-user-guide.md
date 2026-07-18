@@ -133,7 +133,7 @@ The Gitsigns mappings below are buffer-local: they exist only for files attached
 
 | Mapping | Action |
 | --- | --- |
-| `]h` / `[h` | Next / previous hunk |
+| `<Space>gn` / `<Space>gN` | Next / previous hunk |
 | `<Space>gp` / `<Space>gi` | Preview current hunk in a popup / inline |
 | `<Space>gd` / `<Space>gD` | Diff current file against index / `HEAD` |
 | `<Space>gs` / `<Space>gr` | Stage or reset current hunk; in Visual mode, stage or reset the selection |
