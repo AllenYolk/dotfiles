@@ -65,7 +65,7 @@ return {
       end,
     },
   },
-  { "folke/which-key.nvim", event = "VeryLazy", opts = { delay = 500 } },
+  { "folke/which-key.nvim", event = "VeryLazy", opts = { delay = 200 } },
   { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, opts = { options = { theme = "auto" } } },
   { "wakatime/vim-wakatime", lazy = false },
 
