@@ -2,6 +2,6 @@
 	name = AllenYolk
 	email = allen.yfhuang@gmail.com
 [core]
-	editor = vim
+	editor = nvim
 [commit]
 	template = ~/.gitcommitmessage

@@ -7,7 +7,6 @@
 | Shell | `.zshrc`、`.aliases`、`.p10k.zsh` | `.zshrc` 仅供检查；可选 `~/.aliases`、`~/.p10k.zsh` |
 | Git | `.gitconfig`、`.gitcommitmessage` | `~/.gitconfig`、`~/.gitcommitmessage` |
 | tmux | `.tmux.conf` | `~/.tmux.conf` |
-| 经典 Vim | `.vimrc` | `~/.vimrc` |
 | Neovim | `nvim/init.lua`、`nvim/lua/`、`nvim/lazy-lock.json` | `~/.config/nvim/` 中对应条目 |
 | Ghostty | `ghostty-config` | 见 [Ghostty 操作](docs/operations/ghostty.md) |
 
@@ -26,11 +25,11 @@
 ## 操作文件
 
 - [链接协议与清单](docs/operations/linking.md)：所有链接操作的前置检查、命令和回滚边界。
+- [依赖矩阵](docs/operations/dependencies.md)：跨领域的必需、按需与可选第三方依赖。
 - [Shell 与提示符](docs/operations/shell.md)：Zsh、Oh My Zsh、Powerlevel10k 和别名。
 - [Git](docs/operations/git.md)：身份、提交模板和代理设置。
 - [tmux](docs/operations/tmux.md)：TPM、剪贴板及重载。
 - [Neovim](docs/operations/neovim.md)：依赖、局部链接、插件同步与验收。
 - [Ghostty](docs/operations/ghostty.md)：macOS/Linux 目标目录与字体依赖。
-- [经典 Vim](docs/operations/vim.md)：Vundle 旧配置的独立部署。
 
 面向最终用户的概览和选择入口在 [README.md](README.md)；Neovim 的日常快捷键见 [docs/neovim-user-guide.md](docs/neovim-user-guide.md)。

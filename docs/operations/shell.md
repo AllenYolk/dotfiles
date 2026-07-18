@@ -10,9 +10,21 @@
 | `.aliases` | `~/.aliases` | Git、目录、GPU 与 Conda 常用别名 |
 | `.p10k.zsh` | `~/.p10k.zsh` | Powerlevel10k 提示符外观 |
 
-## 前置条件
+## 依赖
 
-`.zshrc` 假定 `$HOME/.oh-my-zsh` 已存在，并启用 `aliases`、`autojump`、`zsh-autosuggestions`、`zsh-syntax-highlighting`、`git-open` 等插件。它还会加载 `$HOME/.local/bin/env`，此文件是机器本地环境入口，不属于本仓库；若缺失，部署前应报告给用户，而不是创建包含个人环境的替代文件。
+安装前先检查 [依赖矩阵](dependencies.md)。`.zshrc` 依赖如下组件：
+
+| 级别 | 工具或服务 | 用途 |
+| --- | --- | --- |
+| 必需 | Zsh、Oh My Zsh | 启动 shell 和加载主题/插件 |
+| 必需 | Powerlevel10k | `.p10k.zsh` 的主题实现 |
+| 必需 | `$HOME/.local/bin/env` | 机器本地环境入口；不属于仓库，agent 不得创建或读取内容 |
+| 必需 | `zsh-autosuggestions`、`zsh-syntax-highlighting`、`git-open`、`zsh-vi-mode` Oh My Zsh custom plugins | `.zshrc` 显式启用的第三方插件 |
+| 按需 | `autojump` | Oh My Zsh 的 `autojump` 插件所调用的命令 |
+| 别名按需 | `git`、`fzf`、`nvim` | Git 别名、`lf` 和 `vrc` |
+| 别名按需 | `tldr`、`watch`、`nvidia-smi`、`nvitop`、`conda`、`citation_refiner` | 仅在执行对应别名或函数时需要；`tldr` 只在主机名为 `bogon` 时参与启动 |
+
+macOS 可通过 Homebrew 安装 `zsh`、`autojump`、`fzf` 和 Git；`nvitop` 使用 `uv tool install nvitop`。Oh My Zsh、Powerlevel10k 与 custom plugins 应安装到用户已有的 Oh My Zsh 目录，安装来源必须经用户确认，且不得执行 `curl | sh` 一类远程脚本。`citation_refiner` 是用户自备命令，本仓库不提供安装来源。
 
 上级安全规则禁止 agent 修改 `~/.zshrc`，因此它不能由本仓库的 agent 工作流部署。agent 只能报告该限制；不得通过编辑、链接、替换或生成另一个启动文件绕过它。
 

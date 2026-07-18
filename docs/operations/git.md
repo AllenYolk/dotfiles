@@ -2,6 +2,15 @@
 
 本领域由 `.gitconfig` 和 `.gitcommitmessage` 组成。部署前先读 [链接协议](linking.md)。
 
+## 依赖
+
+安装前先检查 [依赖矩阵](dependencies.md)。`git` 是加载和使用本领域的必需工具；仓库将 `core.editor` 设为 `nvim`，因此需要 Neovim 才能编辑提交信息。macOS 可通过 Homebrew 安装 `git` 和 `neovim`，Linux 使用发行版包管理器。验证：
+
+```bash
+git --version
+nvim --version
+```
+
 ## 设置方式
 
 `.gitconfig` 当前包含用户姓名、邮箱、默认编辑器和提交模板路径。agent 在链接前必须将其中的身份与目标机器现有 `git config --global --get user.email` 的结果报告给用户；身份不一致或目标已存在时只跳过 `.gitconfig`，不得合并或覆盖。

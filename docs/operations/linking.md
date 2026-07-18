@@ -33,7 +33,6 @@ ln -s "$repo/.tmux.conf" "$HOME/.tmux.conf"
 | Git | `.gitconfig` | `~/.gitconfig` |
 | Git | `.gitcommitmessage` | `~/.gitcommitmessage` |
 | tmux | `.tmux.conf` | `~/.tmux.conf` |
-| Vim | `.vimrc` | `~/.vimrc` |
 | Neovim | `nvim/init.lua` | `~/.config/nvim/init.lua` |
 | Neovim | `nvim/lazy-lock.json` | `~/.config/nvim/lazy-lock.json` |
 | Neovim | `nvim/lua` | `~/.config/nvim/lua` |

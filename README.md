@@ -19,13 +19,13 @@
 | 配置 | 内容 | 设置说明 |
 | --- | --- | --- |
 | Shell | Zsh、Oh My Zsh 别名和 Powerlevel10k | [Shell 与提示符](docs/operations/shell.md)（agent 不修改 `~/.zshrc`） |
-| Git | 身份、Vim 编辑器和提交模板 | [Git](docs/operations/git.md) |
+| Git | 身份、Neovim 编辑器和提交模板 | [Git](docs/operations/git.md) |
 | tmux | 窗格导航、剪贴板和 TPM 插件声明 | [tmux](docs/operations/tmux.md) |
 | Neovim | Python/Markdown 开发、终端和 AI 补全 | [Neovim 设置](docs/operations/neovim.md) · [使用手册](docs/neovim-user-guide.md) |
 | Ghostty | 主题、字体和 SSH shell integration | [Ghostty](docs/operations/ghostty.md) |
-| 经典 Vim | Vundle 与 WakaTime 的旧配置 | [经典 Vim](docs/operations/vim.md) |
 
 所有链接的来源与目标路径见 [链接协议与清单](docs/operations/linking.md)。
+安装前的第三方依赖清单见 [依赖矩阵](docs/operations/dependencies.md)。
 
 ## 注意事项
 

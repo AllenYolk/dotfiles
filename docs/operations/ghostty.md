@@ -2,6 +2,10 @@
 
 仓库文件 `ghostty-config` 设置 Catppuccin Macchiato、MesloLGS NF 12pt 字体，以及 SSH shell integration。它不包含密钥或主机信息。
 
+## 依赖
+
+安装前先检查 [依赖矩阵](dependencies.md)。Ghostty 应用本身和 `MesloLGS NF` 字体是必需项；主题名称由 Ghostty 自带主题集解析。SSH shell integration 只在使用 SSH 时生效，并要求目标终端与远端系统支持相应 terminfo。先用 `ghostty +show-config --default --docs` 检查 CLI 是否可用和主题是否被识别；若缺少字体或应用，只报告安装需求，不更改系统字体或猜测安装路径。
+
 ## 目标路径
 
 Ghostty 的目标文件因平台而异，必须先用 `ghostty +show-config --default --docs` 或本机安装文档确认：
