@@ -12,6 +12,17 @@
 
 最重要的原则是：先回到 Normal 模式，再执行快捷键。
 
+### 模式入门
+
+| 模式 | 进入方式 | 回到 Normal 模式 | 适用场景 |
+|---|---|---|---|
+| Normal | `Esc` | 已在 Normal 模式 | 移动、删除、复制、搜索、执行快捷键 |
+| Insert | `i`（光标前）、`a`（光标后）、`o`（下方新行） | `Esc` | 输入文字 |
+| Visual | `v`（字符）、`V`（整行）、`Ctrl-v`（块） | `Esc` | 选择后复制、删除、缩进，或对部分 Git hunk 操作 |
+| Command-line | `:` | `Esc` | 执行 `:Gitsigns ...`、`:Lazy` 等命令 |
+
+例如 `v` 选择文字后按 `d` 删除、按 `y` 复制；`V` 选中多行后按 `>` 缩进。若快捷键没有反应，先按一次 `Esc`。
+
 ## 快速导航
 
 | 要做什么 | 首选入口 |
@@ -167,8 +178,8 @@ Minuet 通过 OpenCode Go 的 `deepseek-v4-flash` 在代码 buffer 中显示灰�
 |---|---|
 | `:Gitsigns blame_line` | 在浮窗显示当前行最后一次提交的信息 |
 | `:Gitsigns blame` | 打开当前文件的 blame 面板 |
-| `:Gitsigns show` | 以 index 版本打开当前文件 |
-| `:Gitsigns show HEAD~1` | 以指定历史版本打开当前文件 |
+| `:Gitsigns show` | 打开当前文件的 index 版本；此 buffer 可写，保存会直接更新暂存区，仅在明确要编辑已暂存内容时使用 |
+| `:Gitsigns show HEAD~1` | 打开指定历史版本以供检查；不要在此类版本 buffer 中保存修改 |
 | `:FzfLua git_status` | 在选择器中查看工作区状态并打开文件 |
 | `:FzfLua git_commits` | 搜索项目提交历史 |
 | `:FzfLua git_bcommits` | 搜索当前文件的提交历史 |
@@ -197,34 +208,41 @@ git show <commit>
 git restore --staged <path>  # 仅取消暂存，保留工作区修改
 ```
 
+### 分支、同步与冲突
+
+这些是仓库级操作，使用 `<Space>tn` 打开终端。先用 `git status --short` 确认没有未处理的本地修改，再执行：
+
+```bash
+git fetch --prune                 # 更新远端引用并清理已删除分支
+git switch <branch>               # 切换已有分支
+git switch -c <branch>            # 从当前提交创建并切换新分支
+git pull --ff-only                # 仅接受快进更新，避免隐式 merge commit
+git push -u origin <branch>       # 首次推送并设置上游
+git push                          # 后续推送当前分支
+```
+
+将目标分支整合到当前功能分支前，先 `git fetch --prune`。团队允许保留整合提交时使用 `git merge origin/<target>`；需要线性本地提交历史且该分支尚未共享时使用 `git rebase origin/<target>`。不要对已经推送并被他人使用的分支随意 rebase，更不要用强制 push 覆盖远端历史。
+
+发生冲突时，按以下顺序处理：
+
+1. `git status` 列出冲突文件；用 `nvim <path>` 打开它们。
+2. 搜索 `<<<<<<<`、`=======`、`>>>>>>>`，选择或重写最终内容，删除所有冲突标记后 `<Space>w` 保存。
+3. `git add <path>` 标记已解决；所有文件解决后执行 `git merge --continue` 或 `git rebase --continue`。
+4. 确认本次整合不应继续时使用对应的 `git merge --abort` 或 `git rebase --abort`，不要用 `git reset --hard` 作为快捷替代。
+
 不要用 Gitsigns 代替 Git 的仓库级操作，也不要为了清理 diff 在终端随意执行 `git reset --hard`。
 
 ## 关键插件和边界
 
 ### lazy.nvim
 
-后台插件管理器。日常只需用 `:Lazy` 查看状态；其它命令会修改本机插件目录：
-
-```vim
-:Lazy
-:Lazy sync
-:Lazy clean
-```
-
-`:Lazy sync` 会按配置和锁文件安装/更新插件，可能访问网络；`:Lazy clean` 会删除不再被配置引用的插件。执行前确认本机插件状态和网络影响。当前已关闭 LuaRocks 支持，因为现有插件不需要它。
+后台插件管理器，按锁文件提供本手册所述插件。日常编辑不需要直接操作它；插件同步、升级、清理和状态诊断属于维护流程，见 [Neovim 操作](operations/neovim.md)。当前已关闭 LuaRocks 支持，因为现有插件不需要它。
 
 ### Tree-sitter
 
 负责语法高亮和结构感知，不是 LSP，也不负责类型分析。当前已安装 Python、Markdown、Lua、Bash、JSON、Vim 等 parser；配置不启用自动折叠，文件默认保持展开。
 
-```vim
-:checkhealth nvim-treesitter
-:TSInstall python
-:TSUpdate
-:TSInstall cuda
-```
-
-`TSInstall` 与 `TSUpdate` 会下载并编译 parser；最后一条只在以后确实需要 CUDA 语法时执行。它们不是日常编辑命令，执行前确认网络和本机编译环境可用。
+parser 的安装、更新和编译属于维护流程，见 [Neovim 操作](operations/neovim.md)；日常编辑中无需手动执行 Tree-sitter 命令。
 
 ### fzf-lua
 
@@ -232,7 +250,7 @@ git restore --staged <path>  # 仅取消暂存，保留工作区修改
 
 ### Oil
 
-它是文件系统编辑器，适合批量重命名、创建和删除文件；代码跳转仍使用 fzf 和 LSP。用 `<Space>o` 打开后像编辑文本一样修改文件名，保存 buffer 即应用变更。常用默认操作：`Enter` 打开、`-` 返回父目录、`g.` 切换隐藏文件、`Ctrl-p` 预览、`Ctrl-s` 垂直分屏打开、`Ctrl-h` 水平分屏打开、`g?` 查看完整帮助。保存时会对文件系统生效，重命名或删除前先检查改动行。
+它是文件系统编辑器，适合批量重命名、创建和删除文件；代码跳转仍使用 fzf 和 LSP。用 `<Space>o` 打开后像编辑文本一样修改文件名，保存 buffer 会先展示变更确认，确认后才应用到文件系统。常用默认操作：`Enter` 打开、`-` 返回父目录、`g.` 切换隐藏文件、`Ctrl-p` 预览、`Ctrl-s` 垂直分屏打开、`Ctrl-h` 水平分屏打开、`g?` 查看完整帮助。重命名或删除前先检查改动行和确认提示。
 
 ### gitsigns.nvim
 
@@ -451,8 +469,9 @@ Neovim 中检查：
 
 ```vim
 :checkhealth nvim-treesitter
-:TSInstall python
 ```
+
+如果 parser 缺失，按 [Neovim 操作](operations/neovim.md) 中经确认的维护流程安装；不要在故障排查时直接下载或编译未知 parser。
 
 ### 文件选择器没有图标或图标异常
 
@@ -470,12 +489,10 @@ Neovim 中检查：
 ### 插件状态异常
 
 ```vim
-:Lazy
-:Lazy sync
 :checkhealth
 ```
 
-不要一遇到问题就删除整个 `~/.local/share/nvim`；先查看具体插件日志和 `:checkhealth` 输出。
+不要一遇到问题就删除整个 `~/.local/share/nvim`；先查看具体插件日志和 `:checkhealth` 输出。需要同步或清理插件时，按 [Neovim 操作](operations/neovim.md) 执行。
 
 ## 当前配置的边界
 
