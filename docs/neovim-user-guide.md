@@ -146,7 +146,7 @@ Supermaven 在代码 buffer 中显示灰色 ghost text。首次使用时，选�
 
 ### Tree-sitter
 
-负责语法高亮、折叠和结构感知，不是 LSP，也不负责类型分析。当前已安装 Python、Markdown、Lua、Bash、JSON、Vim 等 parser。
+负责语法高亮和结构感知，不是 LSP，也不负责类型分析。当前已安装 Python、Markdown、Lua、Bash、JSON、Vim 等 parser；配置不启用自动折叠，文件默认保持展开。
 
 ```vim
 :checkhealth nvim-treesitter
