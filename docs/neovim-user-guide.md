@@ -36,12 +36,12 @@ nvim .
 For remote work:
 
 ```bash
-ssh roshan4-gpu
+ssh <host>
 tmux new -As work
 nvim .
 ```
 
-Over SSH, Neovim selects OSC52 clipboard support. Use `"+y` to copy selected text or the current line to the local clipboard. Do not copy passwords, keys, or other sensitive text through an untrusted terminal.
+Over SSH, Neovim selects OSC52 clipboard support. In Visual mode, use `"+y` to copy the selection to the local clipboard; in Normal mode, use `"+yy` to copy the current line. Do not copy passwords, keys, or other sensitive text through an untrusted terminal.
 
 ## Keymap Reference
 
