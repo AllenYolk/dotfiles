@@ -397,6 +397,19 @@ Neovim 中检查：
 :TSInstall python
 ```
 
+### 文件选择器没有图标或图标异常
+
+文件图标由 `nvim-web-devicons` 提供，终端必须使用 Nerd Font 才能正确绘制图标字符。
+
+- 文件选择器完全没有图标列：先检查 `nvim-web-devicons` 是否已由 Lazy 安装和加载。
+- 图标显示为空白、方框或乱码：安装 Nerd Font，并将终端字体设为 `MesloLGS NF` 或 `JetBrainsMono Nerd Font Mono`。
+
+在 Neovim 中检查插件：
+
+```vim
+:Lazy
+```
+
 ### 插件状态异常
 
 ```vim
