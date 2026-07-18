@@ -4,14 +4,9 @@
 
 ## 配置迁移
 
-在新机器上克隆本仓库后，从仓库根目录运行：
+在新机器上，先阅读仓库根目录的 [AGENTS.md](../AGENTS.md)，再让 agent 按 [Neovim 操作](operations/neovim.md) 逐项检查和部署。它只会管理 `nvim/init.lua`、`nvim/lazy-lock.json` 和 `nvim/lua/`，并保留 `~/.config/nvim/` 中的 `.env` 等机器私有文件。
 
-```bash
-./createsymlink.sh
-nvim --headless '+Lazy! sync' '+qa!'
-```
-
-脚本会把 `nvim/init.lua`、`nvim/lazy-lock.json` 和 `nvim/lua/` 分别链接到 `~/.config/nvim/`；目录本身保留为本机目录，因此 `.env` 等机器私有文件不会进入仓库。已有同名非链接对象会跳过并提示，不会覆盖。完整的依赖安装与验收要求见文末 Agent Prompt。
+旧的 `createsymlink.sh` 已移除：它会跨领域修改主目录链接，不能作为 Neovim 的部署方式。插件同步会下载依赖，须在用户确认后执行。
 
 ## 基本约定
 
@@ -424,67 +419,7 @@ Neovim 中检查：
 
 保持当前状态的好处是启动快、依赖少、服务器环境干净。只有当某项工作流确实出现重复劳动时，再增加对应插件。
 
-## Agent Prompt：自动安装 Neovim 和本配置
 
-下面这段 Prompt 可直接交给具备终端访问权限的 Agent（例如 Codex）。它的目标是让 Agent 在本地 Mac 和指定的 Roshan 开发机上完成安装、部署和验收；遇到普通的软件包选择时自行判断，不要反复询问用户。
+## 面向 Agent 的部署
 
-```text
-你是 Neovim 环境部署代理。请直接执行，不要只给出操作建议。目标是在当前本地机器，以及用户明确指定的远程主机上，安装 Neovim 和本项目的 minimal Neovim 配置，并完成可复现的验收。
-
-【目标配置】
-这是面向 Python、Markdown 和终端工作的跨 macOS/Linux 配置。必须包含：
-1. Neovim >= 0.11（配置使用 vim.lsp.config/vim.lsp.enable）。
-2. lazy.nvim 插件管理器。
-3. nvim-treesitter（main 分支）和 tree-sitter-cli。
-4. fzf-lua、oil.nvim、gitsigns.nvim、which-key.nvim、lualine.nvim。
-5. blink.cmp：提供 LSP、路径和 buffer 补全。
-6. conform.nvim + Ruff：Python 格式化；nvim-lint + Ruff：保存后 lint。
-7. basedpyright：Python 类型分析、跳转、引用和重命名。
-8. marksman：Markdown LSP。
-9. render-markdown.nvim：Markdown buffer 内即时渲染。
-10. vim-wakatime：复用目标用户已有的 `~/.wakatime.cfg` 记录编辑活动。
-11. minuet-ai.nvim：通过 OpenCode Go 的 `deepseek-v4-flash` 提供 ghost text AI 补全；`Tab` 必须继续保留给 blink.cmp。
-
-【配置源】
-优先在当前仓库查找 `nvim/` 目录，其中包含 `init.lua`、`lazy-lock.json`、`lua/config/` 和 `lua/plugins/`。在 `~/.config/nvim/` 中仅链接这些受管理对象，保持目录本身为本机目录；不要把工作区绝对路径写进 Lua。若找不到该目录，只报告这个阻塞原因，不要凭空重写另一套配置。
-
-【安全和幂等原则】
-- 先识别操作系统、架构、当前用户、Neovim 版本和包管理器；重复执行不得产生重复安装或重复配置行。
-- 不要删除用户的项目、SSH 配置、Rustup、Python 环境或其他编辑器。
-- 若 ~/.config/nvim 是指向本配置源的旧目录软链接，先只解除该软链接并创建本机目录；不要删除其源目录。若已有同名受管理对象且不是本配置软链接，跳过并报告，不覆盖机器本地文件。
-- 只在确实需要且有 sudo 权限时使用 sudo。若 apt 中的 Neovim 版本低于 0.11，不要继续保留这个无用旧版本：改用官方新版本（优先用户目录/AppImage/tarball），验证成功后仅卸载旧的 apt Neovim 包，不要清理无关依赖。
-- 不安装 Mason、clangd、nvim-dap、neotest、LuaRocks、Node/Perl/Ruby provider，也不安装 Copilot、Codeium 或其他额外 AI provider。
-- 不要读取、复制、打印或提交 `~/.wakatime.cfg`、`~/.config/nvim/.env`、`~/.hermes/.env` 或其他凭据。WakaTime 仅复用目标用户已有的共享配置。
-- 只有在 SSH 不可用、需要密码/二次认证或配置源缺失时才请求用户介入；不要猜测凭据。
-
-【本地依赖安装】
-- macOS：使用 Homebrew 安装缺失的 neovim、git、ripgrep、fd、fzf、tree-sitter-cli；使用 uv 安装缺失的 ruff 和 basedpyright；使用包管理器或官方发布二进制安装缺失的 marksman。
-- Debian/Ubuntu：先 apt-get update；安装缺失的 git、ripgrep、fd-find、fzf、curl、ca-certificates 和编译/解压所需的最小工具。Neovim 必须达到 >=0.11，否则使用官方发布版本。Ruff 和 basedpyright 优先用 uv tool install，marksman 使用发行版包或官方发布二进制，tree-sitter-cli 使用发行版包或官方发布版本。
-- 用户级可执行文件统一放在 ~/.local/bin，并确保当前 shell 和后续登录 shell 的 PATH 包含 ~/.local/bin；fd-find 若只提供 fdfind，提供用户级 fd 兼容命令。
-- 安装后检查：nvim、git、rg、fd、fzf、tree-sitter、ruff、basedpyright-langserver、marksman 都能在 PATH 中找到。
-
-【部署配置】
-- 创建 ~/.config/nvim 本机目录，并逐项链接 `init.lua`、`lazy-lock.json` 和 `lua/`；不要复制完整目录或把工作区的绝对路径写进 Lua。保留该目录中的本地 `.env` 等非受管理文件。
-- 确认 leader/localleader 都是空格，远程 SSH 会话中 Neovim 使用 OSC52 剪贴板。
-- 若目标机使用 tmux，幂等地确保 ~/.tmux.conf 含有：set -s set-clipboard on；不要重复添加。必要时重新加载 tmux 配置。
-- 启动 Neovim，让 init.lua 自动安装 lazy.nvim，然后执行 Lazy sync/安装缺失插件。不要启用 LuaRocks。
-- 配置 Minuet 使用 OpenCode Go 的 OpenAI-compatible Chat Completions endpoint 和 `deepseek-v4-flash`，保持 `Tab` 只用于 blink.cmp。密钥仅从目标机器已导出的 `OPENCODE_GO_API_KEY`、`OPENCODE_GO_API_KEY_FILE` 指向的私有文件、`~/.config/nvim/.env` 或 `~/.hermes/.env` 读取，绝不写入仓库或复制到远程主机。
-- 对 Python 项目识别 .venv 或 venv；不要创建或修改用户的虚拟环境。
-
-【远程主机】
-- 若用户要求部署 roshan4-gpu 和 roshan4-cpu，使用系统 OpenSSH 的 ssh 命令和用户已有的 Host 别名（例如 ssh roshan4-gpu），不要依赖 GUI 编辑器的 SSH 解析器。
-- 需要 TTY 时使用 ssh -tt。传输配置优先用 ssh 管道（tar/stdin 或 base64 写入），不要假定 scp 能正确处理跳板机、多层 ProxyJump 或复杂 SSH config。
-- 在每台远程机上独立执行依赖安装、配置部署、插件同步和验收；不要把 macOS 二进制复制到 Linux。
-
-【验收】
-每个目标都必须完成以下检查，并记录实际版本和路径：
-1. nvim --version >= 0.11，且 `nvim --headless -u ~/.config/nvim/init.lua +'qa!'` 无启动错误。
-2. Lazy、Tree-sitter、blink.cmp、Conform、nvim-lint、LSP、WakaTime 和 Minuet 配置均能加载。
-3. 创建临时 .md 文件，用 headless Neovim 验证 `require('render-markdown')` 成功、`:RenderMarkdown` 命令存在且默认启用；随后删除临时文件。
-4. 打开临时 Python 文件，确认 basedpyright 可启动；确认 Ruff 可执行。
-5. Markdown 文件的 marksman 可启动；远程机确认 SSH_CONNECTION 时使用 OSC52，tmux 设置已生效。
-6. 检查 `:messages`、`:checkhealth` 和 Lazy 状态，修复由本次部署引入的错误。
-7. 验证 `:WakaTimeToday`、`:Minuet virtualtext toggle` 和 Minuet 的 `Ctrl-l`、`Ctrl-j`、`Ctrl-]` 映射存在；不要发送或打印任何 API key。
-
-最后用简洁表格报告：每台机器的 Neovim 版本、配置路径、已安装工具、插件同步结果、验收结果、备份路径，以及任何必须由用户手动处理的事项。若某一步失败，先尝试安全的替代安装路径，再报告具体错误和下一步，不要留下半配置状态。
-```
+部署由根目录的 [AGENTS.md](../AGENTS.md) 统一约束；具体依赖、局部链接、插件同步和验收步骤在 [Neovim 操作](operations/neovim.md)。该操作文件是唯一的 agent 部署入口，避免复制一段不受版本控制的长 Prompt 到其它会话。
