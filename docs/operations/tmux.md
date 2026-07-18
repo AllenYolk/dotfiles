@@ -10,7 +10,8 @@
 | --- | --- | --- | --- |
 | 必需 | tmux | 加载本配置 | `tmux -V` |
 | 必需 | `xterm-256color` terminfo | 本配置设置的终端类型 | `infocmp xterm-256color` |
-| 按需 | TPM、Git 与网络访问 | 安装声明的 tmux 插件 | `test -x ~/.tmux/plugins/tpm/tpm` |
+| 必需 | TPM | `.tmux.conf` 无条件加载 `~/.tmux/plugins/tpm/tpm`；缺失会使插件加载报错 | `test -x ~/.tmux/plugins/tpm/tpm` |
+| 按需 | Git 与网络访问 | 首次安装 TPM 与其声明的 tmux 插件 | `git --version` |
 | 按需 | `vim-tmux-navigator`（由 TPM 安装） | 在 tmux 和 Neovim 之间导航 | TPM 插件目录存在 |
 | 平台相关 | 支持 OSC52 的终端 | `set-clipboard on` 的远程复制工作流 | 在目标终端手动复制测试 |
 

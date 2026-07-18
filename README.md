@@ -1,6 +1,6 @@
 # dotfiles
 
-这是 Linux 与 macOS 共用的个人配置仓库，覆盖 Zsh、Git、tmux、Vim、Neovim 和 Ghostty。它保存的是配置源，而不是一键安装器：每台机器都可能已有本地文件、私有凭据和工具状态，部署必须按配置领域单独判断。
+这是 Linux 与 macOS 共用的个人配置仓库，覆盖 Zsh、Git、tmux、Neovim 和 Ghostty。它保存的是配置源，而不是一键安装器：每台机器都可能已有本地文件、私有凭据和工具状态，部署必须按配置领域单独判断。
 
 ## 使用方式
 

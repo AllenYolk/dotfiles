@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | 必需 | Neovim >= 0.11 | `vim.lsp.config`、`vim.lsp.enable` 与全部 Lua 配置 | `nvim --version` |
 | 必需 | `git` 与网络访问 | 首次克隆 lazy.nvim，`Lazy sync` 下载锁定插件 | `git --version` |
-| 必需 | C 编译器和 `tree-sitter` CLI | 启动时自动安装缺失的 Bash、JSON、Lua、Markdown、Python、Vim parser | `cc --version`、`tree-sitter --version` |
+| 必需 | C 编译器、`tree-sitter` CLI、`curl`、`tar` | 启动时自动下载、解压并安装缺失的 Bash、JSON、Lua、Markdown、Python、Vim parser | `cc --version`、`tree-sitter --version`、`curl --version`、`tar --version` |
 | 搜索工作流 | `rg`、`fd`、`fzf` | 分别支持全文搜索、文件枚举和 fzf-lua 选择界面 | `rg --version`、`fd --version`、`fzf --version` |
 | Python 工作流 | `uv`、`ruff`、`basedpyright-langserver` | `uv` 负责安装工具；Ruff 格式化/lint，basedpyright 提供 Python LSP | `uv --version`、`ruff --version`、`basedpyright-langserver --version` |
 | Markdown 工作流 | `marksman` | Markdown LSP | `marksman --version` |
@@ -23,7 +23,7 @@
 macOS 可用 Homebrew 安装基础工具：
 
 ```bash
-brew install neovim git ripgrep fd fzf tree-sitter marksman
+brew install neovim git ripgrep fd fzf tree-sitter marksman curl
 ```
 
 安装 C 编译器使用系统的 Xcode Command Line Tools。Python 工具始终用 `uv`，不要用系统 `pip`：
@@ -33,7 +33,7 @@ uv tool install ruff
 uv tool install basedpyright
 ```
 
-Linux 使用发行版包管理器安装 Neovim、Git、ripgrep、fd、fzf、Tree-sitter CLI、C 编译器和 marksman；包名会随发行版变化，`fd-find` 只提供 `fdfind` 时需要安装提供 `fd` 命令的兼容包或替代包。再用相同的 `uv tool install` 命令安装 Ruff 和 basedpyright。下载插件、系统包或 parser 前必须先取得用户确认。
+Linux 使用发行版包管理器安装 Neovim、Git、ripgrep、fd、fzf、Tree-sitter CLI、C 编译器、`curl`、`tar` 和 marksman；包名会随发行版变化，`fd-find` 只提供 `fdfind` 时需要安装提供 `fd` 命令的兼容包或替代包。再用相同的 `uv tool install` 命令安装 Ruff 和 basedpyright。下载插件、系统包或 parser 前必须先取得用户确认。
 
 该配置会在首次启动时把 lazy.nvim 安装到 Neovim 数据目录。`~/.config/nvim/.env`、`~/.hermes/.env`、WakaTime 配置和项目虚拟环境均是本机私有状态，不得读取、复制或纳入链接。
 
