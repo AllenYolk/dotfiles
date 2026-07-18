@@ -62,7 +62,7 @@ return {
 
   {
     "milanglacier/minuet-ai.nvim",
-    event = "InsertEnter",
+    lazy = false,
     opts = {
       provider = "openai_compatible",
       request_timeout = 2.5,

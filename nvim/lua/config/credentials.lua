@@ -5,7 +5,7 @@ function M.opencode_go_api_key()
     return vim.env.OPENCODE_GO_API_KEY
   end
 
-  local ok, lines = pcall(vim.fn.readfile, vim.fn.expand("~/.Hermes/.env"))
+  local ok, lines = pcall(vim.fn.readfile, vim.fn.expand("~/.hermes/.env"))
   if not ok then
     return nil
   end

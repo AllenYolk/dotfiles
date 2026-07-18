@@ -104,7 +104,7 @@ OSC52 适合复制代码和文本，但会把选中内容通过终端控制序�
 
 ### AI 补全
 
-Minuet 通过 OpenCode Go 的 `deepseek-v4-flash` 在代码 buffer 中显示灰色 ghost text，并关闭模型思考以降低延迟。凭据优先读取 `OPENCODE_GO_API_KEY` 环境变量；本机也可从 `~/.Hermes/.env` 读取同名变量。该密钥不会写入或同步到 dotfiles。
+Minuet 通过 OpenCode Go 的 `deepseek-v4-flash` 在代码 buffer 中显示灰色 ghost text，并关闭模型思考以降低延迟。凭据优先读取 `OPENCODE_GO_API_KEY` 环境变量；本机也可从 `~/.hermes/.env` 读取同名变量。该密钥不会写入或同步到 dotfiles。
 
 | 快捷键 | 作用 |
 |---|---|
@@ -355,7 +355,7 @@ Ctrl-w o       只保留当前窗口
 :Minuet virtualtext enable
 ```
 
-确认当前 buffer 不是 Markdown、帮助页或 Oil，并确认 `~/.Hermes/.env` 或当前 Neovim 环境中存在 `OPENCODE_GO_API_KEY`；不要把密钥写入配置仓库。
+确认当前 buffer 不是 Markdown、帮助页或 Oil，并确认 `~/.hermes/.env` 或当前 Neovim 环境中存在 `OPENCODE_GO_API_KEY`；不要把密钥写入配置仓库。
 
 ### WakaTime 没有记录
 
@@ -454,7 +454,7 @@ Neovim 中检查：
 - 若已有 ~/.config/nvim，先创建带时间戳的备份（除非确认它就是本配置），再部署；保留备份路径。
 - 只在确实需要且有 sudo 权限时使用 sudo。若 apt 中的 Neovim 版本低于 0.11，不要继续保留这个无用旧版本：改用官方新版本（优先用户目录/AppImage/tarball），验证成功后仅卸载旧的 apt Neovim 包，不要清理无关依赖。
 - 不安装 Mason、clangd、nvim-dap、neotest、LuaRocks、Node/Perl/Ruby provider，也不安装 Copilot、Codeium 或其他额外 AI provider。
-- 不要读取、复制、打印或提交 `~/.wakatime.cfg`、`~/.Hermes/.env` 或其他凭据。WakaTime 仅复用目标用户已有的共享配置。
+- 不要读取、复制、打印或提交 `~/.wakatime.cfg`、`~/.hermes/.env` 或其他凭据。WakaTime 仅复用目标用户已有的共享配置。
 - 只有在 SSH 不可用、需要密码/二次认证或配置源缺失时才请求用户介入；不要猜测凭据。
 
 【本地依赖安装】
@@ -468,7 +468,7 @@ Neovim 中检查：
 - 确认 leader/localleader 都是空格，远程 SSH 会话中 Neovim 使用 OSC52 剪贴板。
 - 若目标机使用 tmux，幂等地确保 ~/.tmux.conf 含有：set -s set-clipboard on；不要重复添加。必要时重新加载 tmux 配置。
 - 启动 Neovim，让 init.lua 自动安装 lazy.nvim，然后执行 Lazy sync/安装缺失插件。不要启用 LuaRocks。
-- 配置 Minuet 使用 OpenCode Go 的 OpenAI-compatible Chat Completions endpoint 和 `deepseek-v4-flash`，保持 `Tab` 只用于 blink.cmp。密钥仅从目标机器已导出的 `OPENCODE_GO_API_KEY` 或 `~/.Hermes/.env` 的同名变量读取，绝不写入仓库或复制到远程主机。
+- 配置 Minuet 使用 OpenCode Go 的 OpenAI-compatible Chat Completions endpoint 和 `deepseek-v4-flash`，保持 `Tab` 只用于 blink.cmp。密钥仅从目标机器已导出的 `OPENCODE_GO_API_KEY` 或 `~/.hermes/.env` 的同名变量读取，绝不写入仓库或复制到远程主机。
 - 对 Python 项目识别 .venv 或 venv；不要创建或修改用户的虚拟环境。
 
 【远程主机】
