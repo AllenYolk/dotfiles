@@ -2,17 +2,27 @@
 
 这是一套面向 Python、Markdown 和终端工作的 minimal Neovim 配置，配置源位于本仓库的 `nvim/`。它可部署到 macOS 和 Linux；插件版本由 `nvim/lazy-lock.json` 固定。
 
-## 配置迁移
+## 安装与配置
 
-在新机器上，先阅读仓库根目录的 [AGENTS.md](../AGENTS.md)，再让 agent 按 [Neovim 操作](operations/neovim.md) 逐项检查和部署。它只会管理 `nvim/init.lua`、`nvim/lazy-lock.json` 和 `nvim/lua/`，并保留 `~/.config/nvim/` 中的 `.env` 等机器私有文件。
-
-旧的 `createsymlink.sh` 已移除：它会跨领域修改主目录链接，不能作为 Neovim 的部署方式。插件同步会下载依赖，须在用户确认后执行。
+本页只讲使用。安装依赖、创建链接、同步插件和故障恢复遵循 [Neovim 操作](operations/neovim.md)；所有第三方工具见 [依赖矩阵](operations/dependencies.md)。不要把密钥、WakaTime 配置或本机 `.env` 放进仓库。
 
 ## 基本约定
 
 本文中的 `<leader>` 是空格键。例如 `<leader>ff` 就是连续按空格、f、f。
 
 最重要的原则是：先回到 Normal 模式，再执行快捷键。
+
+## 快速导航
+
+| 要做什么 | 首选入口 |
+|---|---|
+| 找文件或全文 | `<Space>ff` / `<Space>fg` |
+| 阅读或修改 Python | `gd`、`K`、`<Space>ca`、`<Space>cf` |
+| 处理 Markdown | `:RenderMarkdown toggle`、`:RenderMarkdown preview` |
+| 看当前文件的 Git 修改 | `:Gitsigns preview_hunk`、`:Gitsigns diffthis` |
+| 局部暂存并检查提交内容 | `:Gitsigns stage_hunk`、终端 `git diff --cached` |
+| 查提交、分支或工作区状态 | `:FzfLua git_commits`、`:FzfLua git_branches`、`:FzfLua git_status` |
+| 打开终端执行完整 Git 命令 | `<Space>tn` |
 
 ## 推荐工作流
 
@@ -119,11 +129,81 @@ Minuet 通过 OpenCode Go 的 `deepseek-v4-flash` 在代码 buffer 中显示灰�
 
 当前不会保存时自动改写文件，避免编辑器突然改变代码。
 
+## Git：差异、暂存与历史
+
+本配置使用 `gitsigns.nvim` 处理**当前 buffer 的 hunk**，使用 fzf-lua 查找 Git 对象，提交、合并、rebase 等仓库级操作仍通过 Git 命令行完成。先在 Git 仓库根目录或其子目录中启动 `nvim .`；未跟踪文件没有可比较的 Git hunk。
+
+### 当前文件的 diff
+
+左侧 signcolumn 会标记新增、修改和删除 hunk。光标停在某个 hunk 内，再使用以下命令：
+
+| 命令 | 作用 |
+|---|---|
+| `:Gitsigns nav_hunk next` / `prev` | 跳到下一个/上一个 hunk |
+| `:Gitsigns preview_hunk` | 在浮窗查看当前 hunk 的补丁 |
+| `:Gitsigns preview_hunk_inline` | 在当前 buffer 内展开补丁 |
+| `:Gitsigns diffthis` | 打开当前文件相对 index 的 diff，等同于查看该文件的未暂存修改 |
+| `:Gitsigns diffthis HEAD` | 打开当前文件相对 `HEAD` 的 diff，包含已暂存和未暂存修改 |
+| `:Gitsigns diffthis HEAD~1` | 与上一个提交比较当前文件 |
+| `:Gitsigns change_base HEAD~1` | 把左侧 hunk 的比较基准临时改为上一个提交 |
+| `:Gitsigns change_base` | 恢复默认比较基准 |
+
+`diffthis` 打开的是 Neovim diff 视图；用 `:diffoff!` 退出 diff 模式，必要时用 `:only` 收回其它窗口。`change_base` 只改变 Gitsigns 的显示基准，不会改写 Git 历史或工作区。
+
+### 局部暂存与撤销
+
+| 命令 | 作用与边界 |
+|---|---|
+| `:Gitsigns stage_hunk` | 暂存当前 hunk；当光标位于已暂存 hunk 时再次执行会取消暂存。Visual 模式下可对选中部分 hunk 生效 |
+| `:Gitsigns reset_hunk` | 将当前 hunk 恢复到 index 版本，会丢弃该 hunk 的未暂存修改 |
+| `:Gitsigns stage_buffer` | 暂存当前文件全部修改；使用前先审阅 diff |
+| `:Gitsigns reset_buffer` | 将当前文件全部恢复到 index 版本，会丢弃未暂存修改 |
+
+本配置没有为这些操作设置 `<leader>hs` 等快捷键；请从命令行输入 `:Gitsigns` 并使用上表命令。`reset_hunk` 和 `reset_buffer` 是有破坏性的工作区操作，先用 `preview_hunk` 或 `diffthis` 确认。
+
+### Blame、历史与分支
+
+| 命令 | 作用 |
+|---|---|
+| `:Gitsigns blame_line` | 在浮窗显示当前行最后一次提交的信息 |
+| `:Gitsigns blame` | 打开当前文件的 blame 面板 |
+| `:Gitsigns show` | 以 index 版本打开当前文件 |
+| `:Gitsigns show HEAD~1` | 以指定历史版本打开当前文件 |
+| `:FzfLua git_status` | 在选择器中查看工作区状态并打开文件 |
+| `:FzfLua git_commits` | 搜索项目提交历史 |
+| `:FzfLua git_bcommits` | 搜索当前文件的提交历史 |
+| `:FzfLua git_branches` | 搜索分支并执行选择器提供的分支操作 |
+| `:FzfLua git_files` | 只搜索 Git 已跟踪文件 |
+
+fzf-lua 由 `<Space>ff`、`<Space>fg`、`<Space>fb` 或 `<Space>fh` 按需加载。因此新启动 Neovim 后，先执行任一映射一次，再输入这些 `:FzfLua` Git 命令。它们适合定位对象；实际的 merge、rebase、push、pull 和冲突处理仍在终端完成。
+
+### 提交前的推荐闭环
+
+1. 用 `:FzfLua git_status` 或终端 `git status --short` 了解范围。
+2. 逐文件使用 `:Gitsigns preview_hunk` 或 `:Gitsigns diffthis` 审阅未暂存修改。
+3. 只对确认过的变更执行 `:Gitsigns stage_hunk`；需要取消暂存时，把光标放回已暂存 hunk 并再次执行该命令。
+4. `<Space>tn` 打开终端，运行 `git diff --cached` 审阅将要提交的内容，再运行项目测试。
+5. 使用 `git commit` 提交；提交后以 `git status` 确认工作区。
+
+常用终端命令：
+
+```bash
+git status --short       # 工作区概览
+git diff                 # 未暂存修改
+git diff --cached        # 已暂存、将进入下一次提交的修改
+git diff HEAD            # 全部未提交修改
+git log --oneline --decorate --graph -20
+git show <commit>
+git restore --staged <path>  # 仅取消暂存，保留工作区修改
+```
+
+不要用 Gitsigns 代替 Git 的仓库级操作，也不要为了清理 diff 在终端随意执行 `git reset --hard`。
+
 ## 关键插件和边界
 
 ### lazy.nvim
 
-后台插件管理器。偶尔使用：
+后台插件管理器。日常只需用 `:Lazy` 查看状态；其它命令会修改本机插件目录：
 
 ```vim
 :Lazy
@@ -131,7 +211,7 @@ Minuet 通过 OpenCode Go 的 `deepseek-v4-flash` 在代码 buffer 中显示灰�
 :Lazy clean
 ```
 
-当前已关闭 LuaRocks 支持，因为现有插件不需要它。
+`:Lazy sync` 会按配置和锁文件安装/更新插件，可能访问网络；`:Lazy clean` 会删除不再被配置引用的插件。执行前确认本机插件状态和网络影响。当前已关闭 LuaRocks 支持，因为现有插件不需要它。
 
 ### Tree-sitter
 
@@ -144,29 +224,19 @@ Minuet 通过 OpenCode Go 的 `deepseek-v4-flash` 在代码 buffer 中显示灰�
 :TSInstall cuda
 ```
 
-最后一条只在以后确实需要 CUDA 语法时执行。
+`TSInstall` 与 `TSUpdate` 会下载并编译 parser；最后一条只在以后确实需要 CUDA 语法时执行。它们不是日常编辑命令，执行前确认网络和本机编译环境可用。
 
 ### fzf-lua
 
-它是搜索界面，不是文件管理器，也不替代 LSP。全文搜索依赖系统中的 `rg`。
+它是搜索界面，不是文件管理器，也不替代 LSP。全文搜索依赖系统中的 `rg`。配置提供的入口是 `<Space>ff`、`<Space>fg`、`<Space>fb` 和 `<Space>fh`；在任一选择器中输入关键词过滤，确认选择后打开目标。这些映射也会加载插件，之后才能使用 `:FzfLua git_status` 等 Git 专用选择器。
 
 ### Oil
 
-它是文件系统编辑器，适合批量重命名、创建和删除文件；代码跳转仍使用 fzf 和 LSP。打开后像编辑文本一样修改文件名，保存 buffer 即应用变更。
+它是文件系统编辑器，适合批量重命名、创建和删除文件；代码跳转仍使用 fzf 和 LSP。用 `<Space>o` 打开后像编辑文本一样修改文件名，保存 buffer 即应用变更。常用默认操作：`Enter` 打开、`-` 返回父目录、`g.` 切换隐藏文件、`Ctrl-p` 预览、`Ctrl-s` 垂直分屏打开、`Ctrl-h` 水平分屏打开、`g?` 查看完整帮助。保存时会对文件系统生效，重命名或删除前先检查改动行。
 
 ### gitsigns.nvim
 
-在左侧 signcolumn 标记当前文件相对 Git 的新增、修改和删除。常用命令：
-
-```vim
-:Gitsigns preview_hunk
-:Gitsigns blame_line
-:Gitsigns diffthis
-:Gitsigns stage_hunk
-:Gitsigns reset_hunk
-```
-
-它只处理局部 hunk，不替代完整 Git 命令行工作流。
+在左侧 signcolumn 标记当前文件相对 Git 基准的新增、修改和删除。它只处理当前 buffer 的局部 hunk，不替代完整 Git 命令行工作流；diff、暂存、blame、提交历史和终端分工见上方 [Git：差异、暂存与历史](#git差异暂存与历史)。
 
 ### which-key.nvim 和 lualine.nvim
 
