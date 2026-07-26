@@ -17,7 +17,7 @@ This repository stores portable personal configuration. It is not an installatio
 3. Create links only for absent targets. Do not use `ln -f`, `ln -sf`, `rm`, `unlink`, `mv`, or overwrite operations to resolve a conflict.
 4. If a target already exists, including as a file, directory, or symlink, stop work on that target. Report its type and `readlink` result, then wait for the user's decision.
 5. Never read, copy, print, commit, or synchronize private environment files, API keys, tokens, SSH configuration, or other credentials. Machine-local state stays outside this repository.
-6. Verify only the domain changed in the current task, then report created links, skipped items, commands, and verification results. On remote hosts, follow the root safety rules and `remote_env.md` when present.
+6. Verify only the domain changed in the current task, then report created links, skipped items, commands, and verification results. On remote hosts, follow the root safety rules and `ENV.md` when present.
 7. Do not create, replace, or modify `~/.zshrc`. Higher-level safety rules prohibit touching it. Shell operations may handle only `.aliases` and `.p10k.zsh`, and must explicitly report that `.zshrc` was not deployed.
 
 `createsymlink.sh` was removed because it deleted links across unrelated domains and must not be used for deployment.
