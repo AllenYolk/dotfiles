@@ -1,6 +1,6 @@
 local M = {}
 
-local function read_env_key(path)
+local function read_env_key(path, target_name)
   local ok, lines = pcall(vim.fn.readfile, path)
   if not ok then
     return nil
@@ -11,31 +11,18 @@ local function read_env_key(path)
     if not name then
       name, value = line:match("^%s*([%w_]+)%s*=%s*(.-)%s*$")
     end
-    if name == "OPENCODE_GO_API_KEY" then
+    if name == target_name then
       return value:match('^"(.*)"$') or value:match("^'(.*)'$") or value
     end
   end
 end
 
-function M.opencode_go_api_key()
-  if vim.env.OPENCODE_GO_API_KEY and vim.env.OPENCODE_GO_API_KEY ~= "" then
-    return vim.env.OPENCODE_GO_API_KEY
+function M.minimax_api_key()
+  if vim.env.MINIMAX_CN_API_KEY and vim.env.MINIMAX_CN_API_KEY ~= "" then
+    return vim.env.MINIMAX_CN_API_KEY
   end
 
-  local credential_files = {
-    vim.fn.expand("~/.config/nvim/.env"),
-    vim.fn.expand("~/.hermes/.env"),
-  }
-  if vim.env.OPENCODE_GO_API_KEY_FILE and vim.env.OPENCODE_GO_API_KEY_FILE ~= "" then
-    table.insert(credential_files, 1, vim.env.OPENCODE_GO_API_KEY_FILE)
-  end
-
-  for _, path in ipairs(credential_files) do
-    local key = read_env_key(path)
-    if key then
-      return key
-    end
-  end
+  return read_env_key(vim.fn.expand("~/.codex/.env"), "MINIMAX_CN_API_KEY")
 end
 
 return M

@@ -112,13 +112,12 @@ return {
       },
       provider_options = {
         openai_compatible = {
-          api_key = require("config.credentials").opencode_go_api_key,
-          end_point = "https://opencode.ai/zen/go/v1/chat/completions",
-          model = "deepseek-v4-flash",
-          name = "OpenCode Go",
+          api_key = require("config.credentials").minimax_api_key,
+          end_point = "https://api.minimaxi.com/v1/chat/completions",
+          model = "MiniMax-M3",
+          name = "MiniMax",
           optional = {
-            max_tokens = 56,
-            top_p = 0.9,
+            max_completion_tokens = 56,
             thinking = { type = "disabled" },
           },
         },
