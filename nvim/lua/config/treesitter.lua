@@ -33,7 +33,14 @@ vim.api.nvim_create_autocmd("FileType", {
   group = vim.api.nvim_create_augroup("TreesitterFeatures", { clear = true }),
   pattern = languages,
   callback = function()
-    pcall(vim.treesitter.start)
+    local ok = pcall(vim.treesitter.start)
+    if not ok then
+      return
+    end
+
     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    vim.wo.foldmethod = "expr"
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    vim.wo.foldlevel = 99
   end,
 })
