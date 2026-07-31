@@ -22,7 +22,16 @@ function M.minimax_api_key()
     return vim.env.MINIMAX_CN_API_KEY
   end
 
-  return read_env_key(vim.fn.expand("~/.codex/.env"), "MINIMAX_CN_API_KEY")
+  for _, path in ipairs({
+    "~/.codex/.env",
+    "~/.hermes/.env",
+    "~/.local/bin/env",
+  }) do
+    local key = read_env_key(vim.fn.expand(path), "MINIMAX_CN_API_KEY")
+    if key and key ~= "" then
+      return key
+    end
+  end
 end
 
 return M
