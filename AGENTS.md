@@ -4,7 +4,7 @@ This repository stores portable personal configuration. It is not an installatio
 
 | Domain | Repository source | Default target |
 | --- | --- | --- |
-| Shell | `.zshrc`, `.aliases`, `.p10k.zsh` | Inspect `.zshrc` only; optionally `~/.aliases` and `~/.p10k.zsh` |
+| Shell | `.zshrc`, `.aliases`, `starship.toml` | `~/.zshrc`, `~/.aliases`, and `~/.config/starship.toml` when targets are absent |
 | Git | `.gitconfig`, `.gitcommitmessage` | `~/.gitconfig`, `~/.gitcommitmessage` |
 | tmux | `.tmux.conf` | `~/.tmux.conf` |
 | Neovim | `nvim/init.lua`, `nvim/lua/`, `nvim/lazy-lock.json` | Corresponding entries under `~/.config/nvim/` |
@@ -18,14 +18,14 @@ This repository stores portable personal configuration. It is not an installatio
 4. If a target already exists, including as a file, directory, or symlink, stop work on that target. Report its type and `readlink` result, then wait for the user's decision.
 5. Never read, copy, print, commit, or synchronize private environment files, API keys, tokens, SSH configuration, or other credentials. Machine-local state stays outside this repository.
 6. Verify only the domain changed in the current task, then report created links, skipped items, commands, and verification results. On remote hosts, follow the root safety rules and `ENV.md` when present.
-7. Do not create, replace, or modify `~/.zshrc`. Higher-level safety rules prohibit touching it. Shell operations may handle only `.aliases` and `.p10k.zsh`, and must explicitly report that `.zshrc` was not deployed.
+7. Treat the repository `.zshrc` as the shell source of truth. Create `~/.zshrc` as a symlink only when the target is absent; never overwrite or retarget an occupied target without explicit authorization. If it already points to this repository, edit the source and leave the link unchanged. Shell operations may also handle `.aliases` and `starship.toml` under the same target rules.
 
 `createsymlink.sh` was removed because it deleted links across unrelated domains and must not be used for deployment.
 
 ## Operation Files
 
 - [Linking Protocol and Inventory](docs/operations/linking.md): preflight checks, link commands, and rollback boundaries.
-- [Shell and Prompt](docs/operations/shell.md): Zsh, Oh My Zsh, Powerlevel10k, aliases, and their dependencies.
+- [Shell and Prompt](docs/operations/shell.md): Native Zsh, Starship, aliases, and standalone extension dependencies.
 - [Git](docs/operations/git.md): identity, commit template, editor, and proxy boundaries.
 - [tmux](docs/operations/tmux.md): TPM, clipboard behavior, and verification.
 - [Neovim](docs/operations/neovim.md): dependencies, granular links, plugin synchronization, and validation.

@@ -1,0 +1,80 @@
+# Keep the left prompt focused on location, Git, and project context.
+format = "$directory$git_branch$git_commit$git_state$git_status$python$nodejs$character"
+
+# Show transient status information on the right when it matters.
+right_format = "$username$hostname$status$cmd_duration$jobs"
+add_newline = false
+continuation_prompt = "… "
+
+[directory]
+style = "blue"
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+format = " [$symbol$branch]($style)"
+symbol = " "
+style = "purple"
+
+[git_commit]
+commit_hash_length = 7
+format = '[\($hash$tag\)]($style) '
+style = "dimmed purple"
+
+[git_state]
+format = '[\($state( $progress_current/$progress_total)\)]($style) '
+style = "yellow"
+
+[git_status]
+format = " [$all_status$ahead_behind]($style)"
+style = "yellow"
+conflicted = "⚠${count}"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"
+stashed = "≡${count}"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+
+[python]
+format = ' [$symbol$version(\($virtualenv\))]($style)'
+style = "yellow"
+
+[nodejs]
+format = " [$symbol$version]($style)"
+style = "green"
+
+[character]
+format = " $symbol "
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+
+[username]
+format = "[$user]($style)@"
+style_user = "yellow"
+style_root = "red bold"
+
+[hostname]
+ssh_only = true
+format = "[$hostname]($style) "
+style = "dimmed green"
+
+[status]
+disabled = false
+format = " [✘ $status]($style)"
+style = "red bold"
+
+[cmd_duration]
+min_time = 2000
+format = " [$duration]($style)"
+style = "yellow"
+
+[jobs]
+number_threshold = 1
+symbol_threshold = 1
+format = " [$symbol$number]($style)"
+symbol = "✦ "
+style = "blue"

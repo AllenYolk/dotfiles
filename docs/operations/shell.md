@@ -1,41 +1,65 @@
 # Shell and Prompt
 
-This domain covers Zsh startup files, aliases, and the Powerlevel10k prompt. Read the [Linking Protocol](linking.md) before deployment.
+This domain covers the native Zsh startup file, aliases, Starship, and independently installed Zsh extensions. Read the [Linking Protocol](linking.md) before deployment.
 
 ## Managed Files
 
 | Source | Target | Purpose |
 | --- | --- | --- |
-| `.zshrc` | Not deployed | Oh My Zsh, plugins, aliases, and local environment entry point |
+| `.zshrc` | `~/.zshrc` | Native Zsh options, history, completion, extensions, aliases, and Starship entry point |
 | `.aliases` | `~/.aliases` | Common Git, directory, GPU, and Conda aliases |
-| `.p10k.zsh` | `~/.p10k.zsh` | Powerlevel10k prompt appearance |
+| `starship.toml` | `~/.config/starship.toml` | Minimal Starship prompt appearance |
+
+The repository `.zshrc` is the source of truth. On a new machine, deploy it as a symlink only when `~/.zshrc` is absent. If `~/.zshrc` already points to this repository, modify the source file and do not replace the symlink.
 
 ## Dependencies
 
-`.zshrc` depends on the following components:
+The repository `.zshrc` expects:
 
 | Level | Tool or service | Purpose |
 | --- | --- | --- |
-| Required | Zsh and Oh My Zsh | Starts the shell and loads themes and plugins |
-| Required | Powerlevel10k | Implements the `.p10k.zsh` theme |
-| Required | `$HOME/.local/bin/env` | Machine-local environment entry point; it is outside this repository and its contents must not be read or created by an agent |
-| Required | Oh My Zsh custom plugins: `zsh-autosuggestions`, `zsh-syntax-highlighting`, `git-open`, `zsh-vi-mode` | Explicitly enabled by `.zshrc` |
-| Conditional | `autojump` | Command used by Oh My Zsh's `autojump` plugin |
+| Required | Zsh | Shell runtime and native completion/keymap support |
+| Required | Starship | Prompt initialization and rendering |
+| Required | `zsh-autosuggestions` | History/completion suggestions |
+| Required | `zsh-syntax-highlighting` | Command-line syntax highlighting |
+| Optional | `autojump` | Directory navigation through `j` |
+| Optional | `$HOME/.local/bin/env` | Machine-local Conda, NVM, uv, PATH, or other environment initialization; the file stays outside this repository |
 | Alias-only | `git`, `fzf`, `nvim` | Git aliases, `lf`, and `vrc` |
-| Alias-only | `tldr`, `watch`, `nvidia-smi`, `nvitop`, `conda`, `citation_refiner` | Needed only when the matching alias or function is used; `tldr` affects startup only on host `bogon` |
+| Alias-only | `tldr`, `watch`, `nvidia-smi`, `nvitop`, `conda`, `citation_refiner` | Needed only when the matching alias or function is used |
 
-On macOS, Homebrew can install `zsh`, `autojump`, `fzf`, and Git. Install `nvitop` with `uv tool install nvitop`. Oh My Zsh, Powerlevel10k, and custom plugins belong in the user's existing Oh My Zsh directory; confirm their installation source and never execute a remote `curl | sh` script. `citation_refiner` is a user-provided command with no installation source in this repository.
+On macOS, install the required external components with Homebrew:
 
-Higher-level safety rules prohibit an agent from modifying `~/.zshrc`. The agent must report this limitation and must not bypass it by editing, linking, replacing, or generating another startup file.
+```bash
+brew install starship zsh-autosuggestions zsh-syntax-highlighting autojump
+```
 
-Powerlevel10k must be installed in the Oh My Zsh custom theme directory. Ghostty defaults to a Nerd Font; see [Ghostty](ghostty.md) for font requirements.
+The configuration discovers the Homebrew prefix, so it supports both `/opt/homebrew` and `/usr/local` without hard-coded architecture-specific paths. Non-Homebrew machines should place the two Zsh extension directories below `${XDG_DATA_HOME:-$HOME/.local/share}/zsh` or adapt the source paths explicitly.
+
+Do not install a plugin manager. Oh My Zsh, Powerlevel10k, `git-open`, `web-search`, `extract`, `colored-man-pages`, and the Oh My Zsh `aliases` plugin are no longer runtime dependencies.
+
+Ghostty defaults to a Nerd Font; see [Ghostty](ghostty.md) if prompt glyphs do not render correctly.
 
 ## Setup and Verification
 
-After confirmation and only when the individual target is absent, an agent may create links for `.aliases` and `.p10k.zsh`. It must skip `.zshrc`. Verify the aliases file itself:
+Before changing a target, inspect its type and symlink destination. The agent may create `~/.zshrc` and `~/.config/starship.toml` links only when those targets are absent and the user has confirmed the links.
+
+The agent may create a link for `.aliases` only when `~/.aliases` is absent. It must skip an existing file, directory, or symlink. An existing `~/.zshrc` must likewise be preserved unless it is already the repository link or the user has explicitly authorized changing that exact target.
+
+Static checks for the repository sources:
 
 ```bash
-zsh -fc 'source "$HOME/.aliases"; alias glog'
+zsh -n .zshrc
+zsh -n .aliases
 ```
 
-Do not run non-interactive commands that modify environment state. The user maintains whether the existing `.zshrc` loads these files and any machine-specific Conda, NVM, or uv initialization.
+After the repository source is linked as `~/.zshrc`, verify in a new interactive shell:
+
+```bash
+whence -w compinit starship autojump
+alias glog
+bindkey -M viins
+```
+
+Also verify Tab completion, autosuggestions, syntax highlighting, `j` when autojump is retained, Starship in Git and non-Git directories, and the machine-local environment entry point when present.
+
+Do not run non-interactive commands that modify environment state. Do not read, copy, or create `$HOME/.local/bin/env`.

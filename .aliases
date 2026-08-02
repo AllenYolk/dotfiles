@@ -31,18 +31,12 @@ alias df="df -h"
 alias c="clear"
 
 src () {
-    echo "~/.zshrc sourced"
-    source ~/.zshrc
-    if [ -d "$HOME/.oh-my-zsh" ]; then
-        echo "oh-my-zsh reloaded"
-        omz reload
-    fi
+    source "${ZDOTDIR:-$HOME}/.zshrc"
 }
-alias vrc="nvim ~/.zshrc"
 
-# Oh-my-zsh plugins
-alias aliases="als"
-alias gopen="git open"
+vrc () {
+    "${EDITOR:-nvim}" "${ZDOTDIR:-$HOME}/.zshrc"
+}
 
 # citation refiner
 alias cr="citation_refiner"

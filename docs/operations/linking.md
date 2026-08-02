@@ -28,8 +28,9 @@ Do not use force options and do not combine domains in a command. Each target wi
 
 | Domain | Source | Target |
 | --- | --- | --- |
+| Shell | `.zshrc` | `~/.zshrc` |
 | Shell | `.aliases` | `~/.aliases` |
-| Shell | `.p10k.zsh` | `~/.p10k.zsh` |
+| Shell | `starship.toml` | `~/.config/starship.toml` |
 | Git | `.gitconfig` | `~/.gitconfig` |
 | Git | `.gitcommitmessage` | `~/.gitcommitmessage` |
 | tmux | `.tmux.conf` | `~/.tmux.conf` |
@@ -39,7 +40,13 @@ Do not use force options and do not combine domains in a command. Each target wi
 
 Ghostty has platform-specific targets; see [Ghostty](ghostty.md).
 
-`.zshrc` is a repository source but not a deployable target. Higher-level safety rules prohibit an agent from modifying `~/.zshrc`; it may report its existence but must not create, replace, or link it.
+`.zshrc` is the shell source of truth and is distributed by a symlink. On a new machine, create `~/.zshrc` only after inspecting the target and only when it is absent:
+
+~~~bash
+ln -s "$repo/.zshrc" "$HOME/.zshrc"
+~~~
+
+An existing target must not be overwritten or retargeted. An existing symlink that already points to this repository is the managed setup; edit the repository source and leave the symlink itself unchanged.
 
 ## Conflicts and Rollback
 
