@@ -30,4 +30,4 @@ The managed source-to-target mapping is in [Linking Protocol and Inventory](docs
 
 - `.gitconfig` contains a personal identity. Confirm it is appropriate before deploying it to another identity.
 - Git proxy configuration is machine or session state and must not be committed here, otherwise machines without the same network setup may lose GitHub access.
-- Neovim AI completion reads machine-local credentials and sends editing context to OpenCode Go. Credentials never belong in this repository.
+- Neovim AI completion uses MiniMax-M3 through the MiniMax China OpenAI-compatible endpoint. It reads machine-local credentials and sends editing context to MiniMax; credentials never belong in this repository.

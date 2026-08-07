@@ -17,7 +17,7 @@ The table below is derived from the configured plugins, LSP servers, formatters,
 | Optional | Rust/Cargo | Local blink.cmp native fuzzy-backend build when a prebuilt backend is unavailable | `cargo --version` |
 | Optional | Nerd Font | Icons in nvim-web-devicons, blink.cmp, and terminal UI | Inspect icons in the terminal |
 | Optional | WakaTime CLI and private `~/.wakatime.cfg` | `vim-wakatime` activity tracking | `~/.wakatime/wakatime-cli --version` |
-| Optional | `OPENCODE_GO_API_KEY` and OpenCode Go network access | Minuet AI completion; no OpenCode command-line client is required | Check that the variable exists without printing its value |
+| Optional | `MINIMAX_CN_API_KEY` and MiniMax China network access | Minuet AI completion through `MiniMax-M3`; no MiniMax command-line client is required | Check that the variable exists without printing its value |
 | Platform-specific | Clipboard provider | Local `unnamedplus`; OSC52 is selected automatically over SSH | macOS uses the system clipboard; Linux needs a provider appropriate for X11 or Wayland |
 
 On macOS, Homebrew can install the base tools:

@@ -94,7 +94,7 @@ which-key displays available leader mappings after Space is pressed briefly.
 | `Ctrl-b` / `Ctrl-f` | Scroll completion documentation |
 | `Ctrl-l` / `Ctrl-j` / `Ctrl-]` | Accept Minuet suggestion / accept one line / dismiss it |
 
-Minuet uses OpenCode Go with `deepseek-v4-flash`. It reads `OPENCODE_GO_API_KEY` from the environment, an `OPENCODE_GO_API_KEY_FILE`, `~/.config/nvim/.env`, or `~/.hermes/.env`, in that order. Keep the key private. Minuet sends editing context to its provider and does not auto-trigger in Markdown, help, or Oil buffers.
+Minuet uses `MiniMax-M3` through the MiniMax China OpenAI-compatible endpoint. It reads `MINIMAX_CN_API_KEY` from the environment, `~/.codex/.env`, `~/.hermes/.env`, or `~/.local/bin/env`, in that order. Keep the key private. Minuet sends editing context to MiniMax and does not auto-trigger in Markdown, help, or Oil buffers.
 
 ### Python Formatting and Linting
 
