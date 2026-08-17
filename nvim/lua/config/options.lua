@@ -50,6 +50,7 @@ opt.wildmode = "longest:full,full"
 vim.cmd("filetype plugin indent on")
 
 if vim.env.SSH_CONNECTION then
+  opt.clipboard = ""
   local osc52 = require("vim.ui.clipboard.osc52")
   vim.g.clipboard = {
     name = "OSC 52",
