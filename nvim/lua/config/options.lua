@@ -9,8 +9,10 @@ for _, dir in ipairs({
   vim.fn.mkdir(dir, "p")
 end
 
-opt.number = true
-opt.relativenumber = true
+local in_herdr = vim.env.HERDR_PANE_ID ~= nil
+-- ponytail: Herdr 0.8.2 corrupts wrapped rows with line numbers; restore when #3329 is fixed.
+opt.number = not in_herdr
+opt.relativenumber = not in_herdr
 opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 opt.showmode = false
