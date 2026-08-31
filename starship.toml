@@ -53,12 +53,13 @@ success_symbol = "[❯](green)"
 error_symbol = "[❯](red)"
 
 [username]
+show_always = true
 format = "[$user]($style)@"
 style_user = "yellow"
 style_root = "red bold"
 
 [hostname]
-ssh_only = true
+ssh_only = false
 format = "[$hostname]($style) "
 style = "dimmed green"
 
