@@ -33,6 +33,6 @@ compinit
 [[ -r "$HOME/.aliases" ]] && source "$HOME/.aliases"
 
 # Interactive extensions. Syntax highlighting must be loaded last.
-source "$zsh_share_dir/zsh-autosuggestions/zsh-autosuggestions.zsh"
-eval "$(starship init zsh)"
-source "$zsh_share_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[[ -r "$zsh_share_dir/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source "$zsh_share_dir/zsh-autosuggestions/zsh-autosuggestions.zsh"
+(( $+commands[starship] )) && eval "$(starship init zsh)"
+[[ -r "$zsh_share_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source "$zsh_share_dir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
