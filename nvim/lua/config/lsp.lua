@@ -95,4 +95,31 @@ lsp.config("marksman", {
   capabilities = capabilities,
 })
 
-lsp.enable({ "basedpyright", "marksman" })
+lsp.config("texlab", {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_markers = {
+    ".texlabroot",
+    "texlabroot",
+    "Tectonic.toml",
+    ".latexmkrc",
+    "latexmkrc",
+    ".git",
+  },
+  settings = {
+    texlab = {
+      -- VimTeX is the only build owner.
+      build = {
+        onSave = false,
+        forwardSearchAfter = false,
+      },
+      latexFormatter = "none",
+      chktex = {
+        onOpenAndSave = false,
+        onEdit = false,
+      },
+    },
+  },
+})
+
+lsp.enable({ "basedpyright", "marksman", "texlab" })

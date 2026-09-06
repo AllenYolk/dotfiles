@@ -14,6 +14,7 @@ The table below is derived from the configured plugins, LSP servers, formatters,
 | Search workflow | `rg`, `fd`, `fzf` | Live grep, file enumeration, and fzf-lua pickers | `rg --version`, `fd --version`, `fzf --version` |
 | Python workflow | `uv`, `ruff`, `basedpyright-langserver` | uv provisions tools; Ruff formats and lints; basedpyright provides Python LSP | `uv --version`, `ruff --version`, `basedpyright-langserver --version` |
 | Markdown workflow | `marksman` | Markdown LSP | `marksman --version` |
+| LaTeX workflow | `tectonic`, `texlab`, VimTeX | VimTeX provides LaTeX editing and owns Tectonic builds; TexLab provides LSP features | `tectonic --version`, `texlab --version` |
 | Optional | Rust/Cargo | Local blink.cmp native fuzzy-backend build when a prebuilt backend is unavailable | `cargo --version` |
 | Optional | Nerd Font | Icons in nvim-web-devicons, blink.cmp, and terminal UI | Inspect icons in the terminal |
 | Optional | WakaTime CLI and private `~/.wakatime.cfg` | `vim-wakatime` activity tracking | `~/.wakatime/wakatime-cli --version` |
@@ -24,6 +25,7 @@ On macOS, Homebrew can install the base tools:
 
 ```bash
 brew install neovim git ripgrep fd fzf tree-sitter marksman curl
+brew install tectonic texlab
 ```
 
 Install a C compiler through Xcode Command Line Tools. Always provision Python tools with `uv`, never system `pip`:
@@ -36,6 +38,32 @@ uv tool install basedpyright
 On Linux, use the distribution package manager for Neovim, Git, ripgrep, fd, fzf, the Tree-sitter CLI, a C compiler, `curl`, `tar`, and marksman. Package names vary; where `fd-find` exposes only `fdfind`, install a compatible package that provides `fd`. Then use the same `uv tool install` commands for Ruff and basedpyright. Obtain confirmation before downloading plugins, system packages, or parsers.
 
 The first startup installs lazy.nvim in Neovim's data directory. `~/.config/nvim/.env`, `~/.hermes/.env`, WakaTime configuration, and project virtual environments are machine-local private state. Never read, copy, or link them.
+
+VimTeX is declared in `nvim/lua/plugins/core.lua` and is loaded for TeX buffers. It invokes `tectonic -X build` once after a `.tex` file is written; it does not run a continuous compiler. TexLab is enabled as the `.tex`/`.bib` LSP and does not build on save, so there is only one build pipeline. Skim and SyncTeX are not required. LaTeX projects must provide a Tectonic V2 `Tectonic.toml` manifest.
+
+The expected LaTeX project layout is:
+
+```text
+paper/
+├── Tectonic.toml
+└── src/
+    └── main.tex
+```
+
+The smallest manifest is:
+
+```toml
+[doc]
+name = "paper"
+
+[[output]]
+name = "paper"
+type = "pdf"
+inputs = "main.tex"
+synctex = false
+```
+
+The manifest belongs to each LaTeX project, not to this dotfiles repository. Tectonic writes the PDF under its V2 `build/` layout; the Neovim configuration does not pass `--outdir`, compiler flags, or SyncTeX flags.
 
 ## Setup
 

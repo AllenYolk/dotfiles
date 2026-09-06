@@ -266,6 +266,43 @@ Use `:LspInfo` and `:checkhealth vim.lsp` for LSP status. basedpyright provides 
 
 marksman provides headings, links, references, and structural diagnostics. render-markdown supplies the in-editor display. Use `:RenderMarkdown toggle` when you need to edit raw Markdown syntax.
 
+### LaTeX: VimTeX, TexLab, and Tectonic
+
+Open a Tectonic V2 LaTeX project with its project root as the working directory. VimTeX supplies LaTeX editing features such as environments, text objects, motions, folds, TOC navigation, and project/root detection. TexLab attaches through the existing Neovim LSP client and Blink completion menu. Tectonic is the only compiler: saving a `.tex` file runs `tectonic -X build` once and writes the PDF under the manifest's `build/` layout.
+
+The minimal project layout is:
+
+```text
+paper/
+├── Tectonic.toml
+└── src/
+    └── main.tex
+```
+
+Example `Tectonic.toml`:
+
+```toml
+[doc]
+name = "paper"
+
+[[output]]
+name = "paper"
+type = "pdf"
+inputs = "main.tex"
+synctex = false
+```
+
+| Goal | Entry point |
+| --- | --- |
+| Save and compile | `<Space>w` |
+| Compile manually | `<Space>ll` or `:VimtexCompile` |
+| Open the project TOC | `<Space>lt` |
+| Inspect project/compiler state | `:VimtexInfo` |
+| Inspect compiler output/errors | `:VimtexCompileOutput` |
+| LSP definition/references/hover | `gd` / `gr` / `K` |
+
+The workflow intentionally does not install or configure Skim, SyncTeX, a second build-on-save hook, `chktex`, or `latexindent`. VimTeX completion is disabled so TexLab is the sole LaTeX completion provider. For a repository containing multiple LaTeX projects, put an empty `.texlabroot` file in each project root; use a `main.tex.latexmain` marker or a `%! TEX root = ...` directive when VimTeX cannot infer the main file.
+
 ## Essential Vim Editing
 
 | Motion | Action |
