@@ -9,6 +9,7 @@ This repository stores portable personal configuration. It is not an installatio
 | tmux | `.tmux.conf` | `~/.tmux.conf` |
 | Neovim | `nvim/init.lua`, `nvim/lua/`, `nvim/lazy-lock.json` | Corresponding entries under `~/.config/nvim/` |
 | Ghostty | `ghostty-config` | See [Ghostty](docs/operations/ghostty.md) |
+| Zed | `zed/settings.json`, `zed/keymap.json` | Corresponding entries under `~/.config/zed/` |
 
 ## Deployment Protocol
 
@@ -30,5 +31,6 @@ This repository stores portable personal configuration. It is not an installatio
 - [tmux](docs/operations/tmux.md): TPM, clipboard behavior, and verification.
 - [Neovim](docs/operations/neovim.md): dependencies, granular links, plugin synchronization, and validation.
 - [Ghostty](docs/operations/ghostty.md): platform targets and font requirements.
+- [Zed](docs/operations/zed.md): settings and keymap links, multi-machine sync workflow, and unmanaged local state.
 
 The user-facing introduction is [README.md](README.md). Daily Neovim usage is documented in [docs/neovim-user-guide.md](docs/neovim-user-guide.md).

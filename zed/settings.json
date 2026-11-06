@@ -1,0 +1,55 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "agent_servers": {
+    "pi-acp": {
+      "default_config_options": {
+        "model": "minimax-test/MiniMax-M78"
+      },
+      "type": "registry"
+    }
+  },
+  "edit_predictions": {
+    "zed": {
+      "prediction_debounce": 100
+    }
+  },
+  "agent": {
+    "flexible": false,
+    "button": true,
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "project_panel": {
+    "dock": "right"
+  },
+  "proxy": "",
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+    "anthropic_retention": false
+  },
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "vim_mode": true,
+  "icon_theme": {
+    "mode": "system",
+    "light": "JetBrains New UI Icons (Light)",
+    "dark": "Zed (Default)"
+  },
+  "ui_font_size": 16.0,
+  "buffer_font_size": 13.0,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark",
+  },
+}
