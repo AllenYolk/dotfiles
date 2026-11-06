@@ -84,62 +84,6 @@ return {
   },
 
   {
-    "saghen/blink.cmp",
-    version = "1.*",
-    opts = {
-      keymap = {
-        preset = "default",
-        ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-n>"] = { "select_next", "fallback" },
-        ["<C-p>"] = { "select_prev", "fallback" },
-        ["<C-e>"] = { "hide", "fallback" },
-        ["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" },
-        ["<S-Tab>"] = { "snippet_backward", "fallback" },
-        ["<C-b>"] = { "scroll_documentation_up", "fallback" },
-        ["<C-f>"] = { "scroll_documentation_down", "fallback" },
-      },
-      appearance = { nerd_font_variant = "mono" },
-      completion = { documentation = { auto_show = true, auto_show_delay_ms = 200 } },
-      sources = { default = { "lsp", "path", "buffer" } },
-      snippets = { preset = "default" },
-      fuzzy = { implementation = "prefer_rust_with_warning" },
-    },
-  },
-
-  {
-    "milanglacier/minuet-ai.nvim",
-    lazy = false,
-    opts = {
-      provider = "openai_compatible",
-      request_timeout = 2.5,
-      throttle = 1500,
-      debounce = 600,
-      virtualtext = {
-        auto_trigger_ft = { "*" },
-        auto_trigger_ignore_ft = { "help", "markdown", "oil" },
-        keymap = {
-          accept = "<C-l>",
-          accept_line = "<C-j>",
-          dismiss = "<C-]>",
-        },
-        show_on_completion_menu = false,
-      },
-      provider_options = {
-        openai_compatible = {
-          api_key = require("config.credentials").minimax_api_key,
-          end_point = "https://api.minimaxi.com/v1/chat/completions",
-          model = "MiniMax-M3",
-          name = "MiniMax",
-          optional = {
-            max_completion_tokens = 56,
-            thinking = { type = "disabled" },
-          },
-        },
-      },
-    },
-  },
-
-  {
     "stevearc/conform.nvim",
     event = { "BufReadPre", "BufNewFile" },
     keys = {
@@ -193,7 +137,6 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     opts = {
       file_types = { "markdown" },
-      completions = { lsp = { enabled = true } },
     },
   },
 }

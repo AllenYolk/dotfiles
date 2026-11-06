@@ -1,0 +1,4 @@
+# Machine-local credentials never belong in this repository.
+nvim/lua/config/credentials.lua
+
+.DS_Store

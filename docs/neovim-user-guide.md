@@ -81,20 +81,9 @@ which-key displays available leader mappings after Space is pressed briefly.
 | `[d` / `]d` | Previous / next diagnostic |
 | `<Space>dd` | Current diagnostic details |
 
-### Completion and AI
+### Completion
 
-`blink.cmp` supplies LSP, path, and buffer completion. Minuet supplies separate ghost text, so its suggestions do not share the completion menu.
-
-| Mapping | Action |
-| --- | --- |
-| `Ctrl-Space` | Open completion manually |
-| `Ctrl-n` / `Ctrl-p` | Next / previous completion item |
-| `Tab` / `Shift-Tab` | Accept item or move forward / back through snippet placeholders |
-| `Ctrl-e` | Close completion |
-| `Ctrl-b` / `Ctrl-f` | Scroll completion documentation |
-| `Ctrl-l` / `Ctrl-j` / `Ctrl-]` | Accept Minuet suggestion / accept one line / dismiss it |
-
-Minuet uses `MiniMax-M3` through the MiniMax China OpenAI-compatible endpoint. It reads `MINIMAX_CN_API_KEY` from the environment, `~/.codex/.env`, `~/.hermes/.env`, or `~/.local/bin/env`, in that order. Keep the key private. Minuet sends editing context to MiniMax and does not auto-trigger in Markdown, help, or Oil buffers.
+No completion plugin is configured. LSP still provides hover, definitions, references, rename, code actions, and diagnostics; insert-mode completion is Neovim's built-in keyword and buffer completion (`Ctrl-n` / `Ctrl-p`).
 
 ### Python Formatting and Linting
 
@@ -268,7 +257,7 @@ marksman provides headings, links, references, and structural diagnostics. rende
 
 ### LaTeX: VimTeX, TexLab, and Tectonic
 
-Open a Tectonic V2 LaTeX project with its project root as the working directory. VimTeX supplies LaTeX editing features such as environments, text objects, motions, folds, TOC navigation, and project/root detection. TexLab attaches through the existing Neovim LSP client and Blink completion menu. Tectonic is the only compiler: saving a `.tex` file runs `tectonic -X build` once and writes the PDF under the manifest's `build/` layout.
+Open a Tectonic V2 LaTeX project with its project root as the working directory. VimTeX supplies LaTeX editing features such as environments, text objects, motions, folds, TOC navigation, and project/root detection. TexLab attaches through the existing Neovim LSP client. Tectonic is the only compiler: saving a `.tex` file runs `tectonic -X build` once and writes the PDF under the manifest's `build/` layout.
 
 The minimal project layout is:
 
@@ -378,8 +367,7 @@ Open the file with `<Space>ff`. Use normal motions and text objects to edit, mar
 
 | Problem | Checks |
 | --- | --- |
-| Completion missing | `:LspInfo`, `:checkhealth vim.lsp`, then `Ctrl-Space` |
-| Minuet has no suggestion | `:Minuet virtualtext enable`; confirm the buffer is not Markdown, help, or Oil and a private key source exists |
+| Completion missing | `:LspInfo`, `:checkhealth vim.lsp`, then `Ctrl-n` in insert mode |
 | WakaTime is not recording | `:WakaTimeToday`; use `:WakaTimeDebugEnable` and inspect `~/.wakatime/wakatime.log` |
 | Ruff is not running | `ruff --version`, `:ConformInfo`, `:lua require("lint").try_lint()` |
 | Tree-sitter has no highlighting | `:checkhealth nvim-treesitter`; follow [Neovim Operations](operations/neovim.md) for confirmed parser maintenance |

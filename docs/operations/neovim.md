@@ -15,10 +15,8 @@ The table below is derived from the configured plugins, LSP servers, formatters,
 | Python workflow | `uv`, `ruff`, `basedpyright-langserver` | uv provisions tools; Ruff formats and lints; basedpyright provides Python LSP | `uv --version`, `ruff --version`, `basedpyright-langserver --version` |
 | Markdown workflow | `marksman` | Markdown LSP | `marksman --version` |
 | LaTeX workflow | `tectonic`, `texlab`, VimTeX | VimTeX provides LaTeX editing and owns Tectonic builds; TexLab provides LSP features | `tectonic --version`, `texlab --version` |
-| Optional | Rust/Cargo | Local blink.cmp native fuzzy-backend build when a prebuilt backend is unavailable | `cargo --version` |
-| Optional | Nerd Font | Icons in nvim-web-devicons, blink.cmp, and terminal UI | Inspect icons in the terminal |
+| Optional | Nerd Font | Icons in nvim-web-devicons and terminal UI | Inspect icons in the terminal |
 | Optional | WakaTime CLI and private `~/.wakatime.cfg` | `vim-wakatime` activity tracking | `~/.wakatime/wakatime-cli --version` |
-| Optional | `MINIMAX_CN_API_KEY` and MiniMax China network access | Minuet AI completion through `MiniMax-M3`; no MiniMax command-line client is required | Check that the variable exists without printing its value |
 | Platform-specific | Clipboard provider | Local `unnamedplus`; OSC52 is selected automatically over SSH | macOS uses the system clipboard; Linux needs a provider appropriate for X11 or Wayland |
 
 On macOS, Homebrew can install the base tools:
