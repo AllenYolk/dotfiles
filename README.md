@@ -1,6 +1,6 @@
 # dotfiles
 
-Portable personal configuration for Linux and macOS: Zsh, Git, tmux, Neovim, Ghostty, and Zed. This repository contains configuration sources, not a one-command installer. Every machine can have existing files, private credentials, and local tool state, so deployment is evaluated one domain at a time.
+Portable personal configuration for Linux and macOS: Zsh, Git, tmux, Neovim, and Ghostty. This repository contains configuration sources, not a one-command installer. Every machine can have existing files, private credentials, and local tool state, so deployment is evaluated one domain at a time.
 
 ## How to Use It
 
@@ -23,7 +23,6 @@ This workflow never automatically replaces existing files, retargets another sym
 | tmux | Pane navigation, clipboard support, and TPM plugin declarations | [tmux](docs/operations/tmux.md) |
 | Neovim | Python and Markdown development, terminal workflow, and LSP completion | [Neovim setup](docs/operations/neovim.md) · [User guide](docs/neovim-user-guide.md) |
 | Ghostty | Theme, font, and SSH shell integration | [Ghostty](docs/operations/ghostty.md) |
-| Zed | Editor settings and key bindings, synced across machines through this repository | [Zed](docs/operations/zed.md) |
 
 The managed source-to-target mapping is in [Linking Protocol and Inventory](docs/operations/linking.md).
 

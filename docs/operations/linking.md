@@ -10,7 +10,6 @@ From the repository root, run these read-only checks and report the result:
 repo=$(git rev-parse --show-toplevel)
 test -f "$repo/.zshrc"
 test -d "$repo/nvim"
-test -d "$repo/zed"
 ```
 
 Before creating each planned link, run `test -e "$target" -o -L "$target"`. A successful result means the target is occupied and must not be changed. Use `readlink "$target"` only to report a symlink's destination.
@@ -38,8 +37,6 @@ Do not use force options and do not combine domains in a command. Each target wi
 | Neovim | `nvim/init.lua` | `~/.config/nvim/init.lua` |
 | Neovim | `nvim/lazy-lock.json` | `~/.config/nvim/lazy-lock.json` |
 | Neovim | `nvim/lua` | `~/.config/nvim/lua` |
-| Zed | `zed/settings.json` | `~/.config/zed/settings.json` |
-| Zed | `zed/keymap.json` | `~/.config/zed/keymap.json` |
 
 Ghostty has platform-specific targets; see [Ghostty](ghostty.md).
 
