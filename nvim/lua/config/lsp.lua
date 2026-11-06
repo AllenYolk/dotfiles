@@ -1,6 +1,10 @@
 local lsp = vim.lsp
 
 local capabilities = lsp.protocol.make_client_capabilities()
+local blink_ok, blink = pcall(require, "blink.cmp")
+if blink_ok then
+  capabilities = blink.get_lsp_capabilities(capabilities)
+end
 
 local function on_attach(_, buffer)
   local map = function(keys, action, description)

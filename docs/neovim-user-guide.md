@@ -83,7 +83,15 @@ which-key displays available leader mappings after Space is pressed briefly.
 
 ### Completion
 
-No completion plugin is configured. LSP still provides hover, definitions, references, rename, code actions, and diagnostics; insert-mode completion is Neovim's built-in keyword and buffer completion (`Ctrl-n` / `Ctrl-p`).
+`blink.cmp` supplies LSP, path, and buffer completion. There is no AI completion; nothing typed in a buffer leaves the machine.
+
+| Mapping | Action |
+| --- | --- |
+| `Ctrl-Space` | Open completion manually |
+| `Ctrl-n` / `Ctrl-p` | Next / previous completion item |
+| `Tab` / `Shift-Tab` | Accept item or move forward / back through snippet placeholders |
+| `Ctrl-e` | Close completion |
+| `Ctrl-b` / `Ctrl-f` | Scroll completion documentation |
 
 ### Python Formatting and Linting
 
@@ -257,7 +265,7 @@ marksman provides headings, links, references, and structural diagnostics. rende
 
 ### LaTeX: VimTeX, TexLab, and Tectonic
 
-Open a Tectonic V2 LaTeX project with its project root as the working directory. VimTeX supplies LaTeX editing features such as environments, text objects, motions, folds, TOC navigation, and project/root detection. TexLab attaches through the existing Neovim LSP client. Tectonic is the only compiler: saving a `.tex` file runs `tectonic -X build` once and writes the PDF under the manifest's `build/` layout.
+Open a Tectonic V2 LaTeX project with its project root as the working directory. VimTeX supplies LaTeX editing features such as environments, text objects, motions, folds, TOC navigation, and project/root detection. TexLab attaches through the existing Neovim LSP client and Blink completion menu. Tectonic is the only compiler: saving a `.tex` file runs `tectonic -X build` once and writes the PDF under the manifest's `build/` layout.
 
 The minimal project layout is:
 
@@ -367,7 +375,7 @@ Open the file with `<Space>ff`. Use normal motions and text objects to edit, mar
 
 | Problem | Checks |
 | --- | --- |
-| Completion missing | `:LspInfo`, `:checkhealth vim.lsp`, then `Ctrl-n` in insert mode |
+| Completion missing | `:LspInfo`, `:checkhealth vim.lsp`, then `Ctrl-Space` |
 | WakaTime is not recording | `:WakaTimeToday`; use `:WakaTimeDebugEnable` and inspect `~/.wakatime/wakatime.log` |
 | Ruff is not running | `ruff --version`, `:ConformInfo`, `:lua require("lint").try_lint()` |
 | Tree-sitter has no highlighting | `:checkhealth nvim-treesitter`; follow [Neovim Operations](operations/neovim.md) for confirmed parser maintenance |

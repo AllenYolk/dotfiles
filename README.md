@@ -21,7 +21,7 @@ This workflow never automatically replaces existing files, retargets another sym
 | Shell | Native Zsh, Starship, and standalone extensions | [Shell and Prompt](docs/operations/shell.md) |
 | Git | Identity, Neovim editor, and commit template | [Git](docs/operations/git.md) |
 | tmux | Pane navigation, clipboard support, and TPM plugin declarations | [tmux](docs/operations/tmux.md) |
-| Neovim | Python and Markdown development, and terminal workflow | [Neovim setup](docs/operations/neovim.md) · [User guide](docs/neovim-user-guide.md) |
+| Neovim | Python and Markdown development, terminal workflow, and LSP completion | [Neovim setup](docs/operations/neovim.md) · [User guide](docs/neovim-user-guide.md) |
 | Ghostty | Theme, font, and SSH shell integration | [Ghostty](docs/operations/ghostty.md) |
 
 The managed source-to-target mapping is in [Linking Protocol and Inventory](docs/operations/linking.md).
